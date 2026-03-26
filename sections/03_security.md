@@ -8,15 +8,21 @@
      This section is NOT about technical security. It's about building a decision-making
      instinct: "should I be giving this information to Claude right now?" -->
 
+> このセクションは、Claudeを使い始める前に**全員が読む**必要があります。
+> ツールの使い方よりも先に、「何を入力してはいけないか」を理解してください。
+
 ---
 
 ## 3-1. なぜAI利用にはリスクがあるのか
 
-<!-- Explain the core risk in plain terms: Claude is a cloud service.
-     What you type is sent to Anthropic's servers (and potentially used for training
-     unless you're on an enterprise plan with data opt-out).
-     This doesn't make Claude dangerous — it makes INPUT CHOICES important.
-     Analogy: like sending a work email to an external contractor. Would you share this? -->
+Claudeはクラウドサービスです。あなたがClaude.aiに入力したテキストは、Anthropicのサーバーに送信されます。
+
+これはGmailやGoogleドキュメントを使うときと本質的に同じです。クラウドサービスを使う以上、**何を送信するかを意識的に選ぶ責任**があります。
+
+特に注意が必要なのは、Claudeが「気持ちよく何でも受け取ってくれる」点です。機密情報を入力しても、Claudeは断りません。判断するのは常に**あなた自身**です。
+
+<!-- NOTE: The analogy to Gmail/Google Docs makes the concept concrete for non-technical staff
+     without introducing jargon. Emphasize human responsibility, not tool limitation. -->
 
 ---
 
@@ -25,39 +31,74 @@
 <!-- A 3-level model gives non-technical staff a mental framework they can actually use.
      The goal is fast, instinctive decision-making — not a lengthy compliance checklist. -->
 
-### レベル1：低リスク（自由に使える）
+AIに入力する情報を、以下の3段階で判断してください。
 
-<!-- Public or fully anonymized information. Safe to use without restrictions.
-     Examples: writing/editing text, translating public content, brainstorming ideas,
-     summarizing articles, creating presentation outlines, generating templates.
-     Rule: if it could be posted on the company website, it's Level 1. -->
+### レベル1：低リスク ✅ 自由に使える
 
-### レベル2：中リスク（注意して使う）
+**定義：** 公開しても問題のない情報、または完全に匿名化された情報。
 
-<!-- Non-public internal information that doesn't directly identify individuals.
-     Examples: internal process documentation, anonymized project notes,
-     general business strategy discussion (without sensitive financials).
-     Rule: anonymize before inputting. Remove names, client identifiers, specific numbers. -->
+**例：**
+- 文章の作成・翻訳・校正（個人情報を含まないもの）
+- 公開情報をもとにした調査・まとめ
+- 社内向けテンプレートや文書のひな形作成
+- アイデアのブレインストーミング
 
-### レベル3：高リスク（使用前に確認必須）
+**判断基準：** 「これを会社のウェブサイトに載せても問題ないか？」→ YESならレベル1。
 
-<!-- Personal data, client information, financial records, login credentials, API keys.
-     Examples: employee records, customer names/contacts, contracts, passwords.
-     Rule: DO NOT input without explicit approval from your manager AND IT/engineering.
-     NOTE: This is not a technical rule — it is company policy. -->
+---
+
+### レベル2：中リスク ⚠️ 匿名化してから使う
+
+**定義：** 社内の非公開情報だが、個人を特定する情報を含まないもの。
+
+**例：**
+- 案件名・固有名詞を伏せた業務プロセスの整理
+- 数値を仮の値に置き換えた資料の構成検討
+- 部署名や担当者名を省いた議事録の要約
+
+**対処法：** 固有名詞・人名・社名・具体的な数値を入力する前に削除または置換してください。
+
+**NGの例：**
+> ❌ 「田中さんの案件、A社との契約金額が○○円なのですが…」
+> ✅ 「ある案件について、契約金額の調整が必要なのですが…」
+
+---
+
+### レベル3：高リスク 🚫 使用前に必ず確認
+
+**定義：** 個人情報・機密情報・認証情報を含むもの。
+
+**例：**
+- 社員の個人情報（氏名・連絡先・給与・評価）
+- 顧客情報（氏名・メールアドレス・住所・電話番号）
+- 未公開の財務情報・契約内容
+- ログイン情報・パスワード・APIキー
+
+**ルール：** 上長とIT/エンジニアの承認なしに、これらの情報をClaudeに入力しないでください。
+
+<!-- NOTE: Framing Level 3 as "confirm first" rather than "never use" is intentional.
+     Absolute bans get bypassed. A "check first" policy builds sustainable habits. -->
 
 ---
 
 ## 3-3. 絶対に入力してはいけない情報
 
-<!-- A clear, short list. No nuance needed here — just hard stops.
-     - Passwords and login credentials (any account, any system)
-     - API keys and secret tokens
-     - Personal identification numbers (マイナンバー, passport, etc.)
-     - Unpublished financial data or M&A information
-     - Customer personal data (names, emails, addresses, phone numbers)
-     - Any data subject to NDA or confidentiality agreement
-     WARN: Claude will not refuse to accept this information — the responsibility is yours. -->
+どんな状況でも、以下の情報はClaudeに入力しないでください。
+
+| 情報の種類 | 具体例 |
+|-----------|-------|
+| 認証情報 | パスワード、PINコード、セキュリティコード |
+| APIキー・トークン | `sk-ant-...` のような文字列、アクセストークン |
+| 個人識別情報 | マイナンバー、パスポート番号、免許証番号 |
+| 顧客の個人情報 | 氏名・メールアドレス・電話番号・住所 |
+| 未公開の財務情報 | M&A情報、未発表の決算データ |
+| NDA対象の情報 | 守秘義務のある取引先・契約内容 |
+
+<!-- WARN: Claude will never refuse to accept this information — the responsibility
+     is entirely on the user. This must be stated clearly. -->
+
+> ⚠️ **重要：** Claudeはこれらの情報を「受け取らない」とは言いません。
+> 入力を止めるのはシステムではなく、**あなた自身**です。
 
 ---
 
@@ -65,20 +106,30 @@
 
 <!-- For staff who work on Claude Code projects that involve API keys or credentials.
      Core principle: secrets never go in files, never go in prompts.
-     Environment variables explained as a concept (not technically).
-     Analogy: a lockbox vs. a sticky note on your monitor.
-     NOTE: If Claude asks you to put a password in a file, that is a mistake — tell it to use
-     environment variables instead, or ask an engineer to set it up. -->
+     Kept conceptual here — no technical commands. -->
+
+開発プロジェクトでClaudeを使う場合、**APIキーやパスワードをファイルに直接書かない**ことが原則です。
+
+**なぜか？** コードをGitHubに保存するとき、ファイルに書かれた秘密情報は誰にでも見られる状態になる可能性があります。「環境変数」という仕組みを使えば、秘密情報をコードから切り離して管理できます。
+
+**もしClaude（またはClaude Code）が「ファイルにパスワードやAPIキーを書いてください」と指示してきたら、それは間違いです。** 必ずエンジニアに相談してください。
+
+<!-- NOTE: This is the one place where we gently override Claude's potential instructions.
+     Non-technical staff need to know that Claude can be wrong about security. -->
 
 ---
 
 ## 3-5. エンジニアを必ず関与させるケース
 
-<!-- Non-negotiable checklist. If any of these apply, loop in an engineer before proceeding.
-     - The project will be accessible by external users (customers, partners, public)
-     - The project connects to a live database or production system
-     - The project handles authentication (login, permissions)
-     - The project processes or stores personal data
-     - You're unsure which risk level applies
-     This is not about blocking work — it's about having the right people in the loop early,
-     when changes are cheap, rather than late when they are expensive. -->
+以下のいずれかに該当する場合は、作業を進める前にエンジニアに相談してください。
+
+- [ ] そのシステムやツールは、社外のユーザー（顧客・取引先・一般公開）がアクセスする
+- [ ] 本番のデータベースや業務システムに接続する
+- [ ] ログイン・権限管理（誰がアクセスできるか）を扱う
+- [ ] 個人情報を処理・保存する
+- [ ] どのリスクレベルに該当するか判断できない
+
+**これは「作業を止める」ためのルールではありません。** 問題が小さいうちに、適切な人を巻き込むためのルールです。後から修正するコストは、最初から相談するコストの何倍にもなります。
+
+<!-- NOTE: Frame this as "cheap early, expensive late" — not as gatekeeping.
+     The goal is to normalize asking engineers early, not to create anxiety. -->
