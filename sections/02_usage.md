@@ -13,21 +13,33 @@
 
 ## 2-1. プロンプトの仕組み
 
-<!-- Foundation: before introducing any tools, explain HOW Claude receives instructions.
-     This makes Skills, CLAUDE.md, and MCP make intuitive sense rather than feeling magic. -->
+Claudeに何かをお願いするとき、あなたが入力するテキストを**プロンプト**と呼びます。プロンプトの書き方が、Claudeの出力の質を大きく左右します。
 
 ### システムプロンプトとユーザープロンプト
 
-<!-- System prompt: the "briefing" given before the conversation starts.
-     Sets role, constraints, tone, language, and permissions.
-     User prompt: each individual message in the conversation.
-     Analogy: system prompt = job description; user prompt = daily task assignment. -->
+Claudeへの指示には、2種類あります。
 
-### なぜこれを理解する必要があるか
+**システムプロンプト**は、会話が始まる前に設定される「前提条件」です。Claudeの役割・言語・ルール・制約などを定義します。一度設定すれば、同じプロジェクトの中で毎回繰り返す必要はありません。
 
-<!-- CLAUDE.md, Skills, and MCP connectors all operate at the system prompt level.
-     Understanding this means users can reason about WHY Claude behaves differently
-     across different projects, and what to do when it doesn't behave as expected. -->
+**ユーザープロンプト**は、会話の中で送る個々のメッセージです。「この文章を翻訳して」「要点をまとめて」など、その都度の依頼です。
+
+わかりやすく言えば：
+
+> システムプロンプト ＝ 「あなたはこういう仕事をする人です」という職務定義
+> ユーザープロンプト ＝ 「今日はこれをやってください」という日々の指示
+
+<!-- NOTE: This analogy is central to understanding CLAUDE.md, Skills, and MCP.
+     Getting this right means users can reason about tool behavior, not just use it blindly. -->
+
+### 良いプロンプトの書き方
+
+Claudeへの指示は、具体的であるほど良い出力が得られます。
+
+| NG（曖昧） | OK（具体的） |
+|------------|-------------|
+| 「メールを書いて」 | 「A社の竹田さんへ、先日の打ち合わせのお礼と次回日程調整の依頼を書いて。丁寧なビジネス敬語で、200字以内」 |
+| 「これを要約して」 | 「この会議メモを、決定事項・未解決事項・次のアクションの3項目に分けて箇条書きにして」 |
+| 「翻訳して」 | 「以下の日本語を、英語ネイティブのビジネスパーソン向けに自然な英語に翻訳して」 |
 
 ---
 
@@ -37,89 +49,132 @@
      A CLAUDE.md file tells Claude who it's working for, what rules apply, and what's off-limits.
      Creating one per project ensures consistent, safe, repeatable behavior across all staff. -->
 
+**CLAUDE.md**は、プロジェクトのルールをClaudeに伝えるための設定ファイルです。プロジェクトフォルダに置いておくと、Claude Codeがそのフォルダで作業するたびに自動的に読み込みます。
+
+「毎回Claudeに同じことを説明しなくていい」状態を作れるのが最大のメリットです。また、チームメンバー全員が同じCLAUDE.mdを使うことで、Claudeの振る舞いを組織として統一できます。
+
 ### CLAUDE.md に書くべきこと
 
-<!-- - Project purpose and context (what are we building / doing?)
-     - Output language and format preferences
-     - Permitted and forbidden actions (e.g. "never commit without asking", "always write in Japanese")
-     - Security rules (e.g. "never include real customer data in outputs")
-     - Relevant tools and their usage constraints
-     NOTE: A company-level base CLAUDE.md template should be created and distributed
-     from the Tsunagaru GitHub org. Projects then extend it as needed. -->
+- **プロジェクトの目的と背景**（何を作っているか、誰のためか）
+- **出力言語とフォーマット**（日本語で書く、常にMarkdownで返すなど）
+- **使っていいツールとダメなツール**
+- **セキュリティルール**（入力してはいけない情報の定義）
+- **禁止事項**（確認なしにファイルを削除しない、コミットしない、など）
 
-### CLAUDE.md の作り方（実例）
+### CLAUDE.md のサンプル（最小構成）
 
-<!-- Concrete sample to be written during content pass.
-     Show: a minimal version (5 lines) and a fuller version (project-specific).
-     OPTIM: Link to the company's canonical template in the GitHub org once created. -->
+```markdown
+# プロジェクト：社内レポート自動化
+
+## 目的
+月次の営業レポートを自動生成するツール。対象読者は経営陣と各部門マネージャー。
+
+## 出力ルール
+- 出力言語は日本語
+- 文体はですます調（丁寧語）
+- 数値は3桁区切りのカンマ付きで表記（例：1,234,567円）
+
+## セキュリティ
+- 実際の顧客名・担当者名をコードやファイルに含めない
+- APIキーやパスワードをファイルに直書きしない（環境変数を使うこと）
+
+## 禁止事項
+- 確認なしに本番データベースへの書き込みを行わない
+- 確認なしにgitにコミット・プッシュしない
+```
+
+<!-- NOTE: The sample is intentionally minimal — 5 rules, not 50.
+     OPTIM: A company-level base template should be created and distributed
+     from the Tsunagaru GitHub org once real use cases are identified. -->
 
 ---
 
 ## 2-3. 利用モードの違い
 
-<!-- Claude can be used in three fundamentally different modes.
-     Choosing the right one for the task determines quality and safety outcomes. -->
+Claudeには、用途に応じた3つの利用モードがあります。適切なモードを選ぶことが、安全で効率的な作業につながります。
 
 ### チャットモード（Chat）
 
-<!-- Standard conversation. Best for: Q&A, drafting, brainstorming, translation, summarization.
-     No file system access. No tool use. Lowest risk mode.
-     Available on: browser, desktop app, mobile. -->
+**claude.ai**またはデスクトップアプリを使った通常の会話形式です。
 
-### 協働モード（Cowork）
+- ファイルへのアクセスなし。PCを直接操作しない
+- 最もリスクが低く、始めやすい
+- 向いている作業：文章作成・翻訳・要約・Q&A・ブレインストーミング
 
-<!-- Claude Code in interactive mode: Claude and the user work together on a project.
-     Claude can read/write files, run commands, use connectors — but asks before acting.
-     Best for: guided project work where a non-engineer wants Claude to do more than chat.
-     NOTE: This is the recommended mode for most structured work at Tsunagaru. -->
+**非エンジニアスタッフは、まずこのモードから始めてください。**
 
-### コードモード（Code / Autonomous）
+### 協働モード（Claude Code / Cowork）
 
-<!-- Claude Code running with higher autonomy. Used for automated pipelines.
-     Best for: engineers setting up recurring tasks or deployment workflows.
-     WARN: This mode can make irreversible changes. Requires a solid CLAUDE.md with
-     explicit constraints before use. Not recommended for non-technical staff. -->
+Claude Codeというツールを使い、ClaudeとPCの作業を一緒に進めるモードです。
+
+- ファイルの読み書き・作成ができる
+- コマンドの実行やGitHub操作ができる
+- **Claudeは実行前に確認を求めます**（「この操作をしていいですか？」）
+- 向いている作業：プロジェクト単位の文書整理・コード生成・ダッシュボード作成
+
+<!-- NOTE: "Cowork" framing makes this accessible to non-engineers.
+     The key safety message: Claude asks before acting in this mode. -->
+
+### 自律モード（Autonomous / Code）
+
+Claude Codeを高い自律性で動作させるモードです。主にエンジニアが設定した自動化パイプラインで使用します。
+
+- 確認なしに連続して操作を行う
+- 不可逆な変更を加える可能性がある
+- **しっかりしたCLAUDE.mdと制約の設定が必須**
+
+> ⚠️ このモードは非エンジニアスタッフには推奨しません。使用する場合はエンジニアに相談してください。
 
 ---
 
 ## 2-4. Claudeのツール拡張
 
-<!-- Claude's capabilities can be extended in three complementary ways.
-     All three work at the system prompt level — hence why 2-1 comes first. -->
+Claudeの標準機能を超えた作業が必要な場合、以下の3つの方法で能力を拡張できます。
 
 ### Skills（スキル）
 
-<!-- What a Skill is: a Markdown file containing specialized instructions and workflows.
-     Installing a Skill = adding a domain expert's playbook to Claude's briefing.
-     Examples: Google Workspace skill, Vercel skill, presentation (pptx) skill.
-     How to install: manual / marketplace / npx skills CLI.
-     OPTIM: Tsunagaru-approved skill list to be maintained in the GitHub org. -->
+スキルは、特定の分野や作業に特化した**追加指示セット**です。Markdownファイルで構成されており、インストールすることでClaudeがその分野のベストプラクティスを知った状態で作業を開始できます。
+
+**例：**
+- **Google Workspaceスキル**：GmailやGoogleドキュメントをClaudeから操作できる
+- **Vercelスキル**：Webアプリのデプロイ作業を自動化できる
+- **PPTXスキル**：PowerPointファイルの生成・編集ができる
+
+スキルのインストール方法は、手動・マーケットプレイス・CLIツール（`npx skills`）の3種類があります。
+
+<!-- OPTIM: Tsunagaru-approved skill list to be maintained in the GitHub org.
+     Add link here once established. -->
 
 ### MCPコネクタ（外部ツール連携）
 
-<!-- MCP (Model Context Protocol): lets Claude directly operate external tools.
-     Examples: read/send emails via Gmail, create Notion pages, post to Slack.
-     Requires: Desktop app or Claude Code + MCP server configuration.
-     NOTE: Cover setup basics here; security implications are in Section 3. -->
+MCP（Model Context Protocol）は、ClaudeがSlack・Notion・Googleカレンダーなどの外部ツールを**直接操作できる**ようにする仕組みです。
+
+設定が完了すると、たとえば「今週のSlackのメッセージをまとめて」「Notionのページを更新して」といった指示をClaude Codeに出すことができます。
+
+デスクトップアプリまたはClaude Codeでの設定が必要です。詳細はエンジニアに相談してください。
+
+<!-- NOTE: MCP setup details intentionally omitted at v0.1.
+     Cover in Section 4 use cases with concrete examples. -->
 
 ### Projects（プロジェクト機能）
 
-<!-- Claude.ai's built-in project memory: persistent context across conversations.
-     Useful for ongoing work where you don't want to re-explain context each session.
-     Can store a CLAUDE.md equivalent as the project's system prompt. -->
+Claude.aiのブラウザ版・デスクトップアプリには**Projectsという機能**があります。プロジェクトを作成すると、会話をまたいで文脈（コンテキスト）が保持されます。
+
+毎回「あなたはこういう仕事をしています」と説明し直す必要がなくなるため、継続的な作業に特に有効です。CLAUDE.mdに近い役割を、技術的な設定なしに実現できます。
 
 ---
 
 ## 2-5. 外部CLIツールの準備
 
-<!-- Some workflows require additional tools on your computer.
-     Claude Code will tell you when something is missing and often install it for you.
-     This section demystifies what gets installed and why — not a step-by-step guide. -->
+Claude Codeを使って高度な作業を行う場合、追加のツールがPCにインストールされている必要があります。Claude Code自体が「このツールが必要です、インストールしていいですか？」と確認してくれるため、手動でインストールする必要はほとんどありません。
 
-### 主なツールと用途
+**主なツールと用途（参考）：**
 
-<!-- - Node.js / npm: required to run Claude Code and most Skills
-     - Git: version control (see Section 1-2)
-     - gh (GitHub CLI): lets Claude interact with GitHub repositories
-     - gws (Google Workspace CLI): enables Google Drive, Docs, Sheets, Calendar operations
-     NOTE: Claude Code handles installation prompts. Staff just need to approve them. -->
+| ツール | 用途 |
+|--------|------|
+| Node.js / npm | Claude Codeおよびスキルの動作に必要 |
+| Git | バージョン管理（§1参照） |
+| gh（GitHub CLI） | GitHubリポジトリの操作 |
+| gws（Google Workspace CLI） | Google Drive・Docs・Sheetsの操作 |
+
+Claude Codeの指示に従ってインストールを進めれば問題ありません。不明な点はエンジニアに確認してください。
