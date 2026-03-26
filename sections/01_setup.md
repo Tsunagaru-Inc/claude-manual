@@ -95,12 +95,10 @@ Claude Codeを使ってプロジェクトを進める場合、作業の記録に
 
 ツナガル株式会社のGitHub Organizationは **[github.com/Tsunagaru-Inc](https://github.com/Tsunagaru-Inc)** です。エンジニアが管理しており、プロジェクト単位でリポジトリ（＝プロジェクトフォルダ）が作成されます。
 
-<!--
-TODO: Mention that organization level claude.md templates and skills are
-     possible and a good thing to have.
-OPTIM: Once company-standard CLAUDE.md templates and approved skills
-     are maintained in the org, add a direct link here.
--->
+<!-- OPTIM: Once company-standard CLAUDE.md templates and approved skills
+     are maintained in the org, replace the paragraph below with a direct link. -->
+
+組織としてClaudeを活用するうえで特に有効なのが、**共通のCLAUDE.mdテンプレートと承認済みスキルリストをGitHub Organizationで管理する**ことです。新しいプロジェクトを始めるとき、このテンプレートを出発点にすることで、全プロジェクトに最低限のセキュリティルールと出力フォーマットが自動的に適用されます。詳細は§2-2（CLAUDE.md）と§2-4（スキル）を参照してください。
 
 ### 知っておくべき3つの概念
 
