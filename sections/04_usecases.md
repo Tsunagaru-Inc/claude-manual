@@ -10,53 +10,104 @@
      OPTIM: As real Tsunagaru use cases emerge from the team (西園さん's use case list,
      GM会 initiative), replace the generic examples below with company-specific ones. -->
 
+このセクションでは、Claudeを実際の業務でどのように活用できるか、具体的な例を紹介します。難易度とリスクレベルの低いものから順に並んでいます。
+
 ---
 
 ## 4-1. 文書作成・翻訳・要約
 
-<!-- Risk Level 1. No special tools required. Browser version is sufficient.
-     Examples:
-     - Drafting internal memos, meeting summaries, job postings
-     - Translating documents between Japanese and English
-     - Summarizing long reports or email threads
-     - Creating structured templates for recurring documents
-     NOTE: This is the ideal entry point for ALL non-technical staff.
-     Good CLAUDE.md to introduce: output language, tone, format preferences. -->
+**リスクレベル：** ✅ レベル1
+**使うツール：** ブラウザ版 / デスクトップアプリ
+
+日常業務で最もすぐに効果が出る使い方です。特別な設定は不要で、今日から始められます。
+
+**できること：**
+
+- 社内メール・議事録・報告書・提案書の下書き作成
+- 日本語⇔英語の翻訳（ビジネス文書・メール・契約書の参考訳）
+- 長い文書の要点まとめ（3行サマリー・箇条書き化）
+- 文章の誤字脱字チェックと文体の統一
+
+**プロンプト例：**
+
+```
+以下の英語メールを、丁寧なビジネス日本語に翻訳してください。
+返信として送る形式にしてください。
+
+[英語メールの本文をここに貼り付け]
+```
+
+> ⚠️ 個人名・会社名・金額など機密性の高い情報は、貼り付け前に削除または仮名に置き換えてください（§3参照）。
 
 ---
 
 ## 4-2. スプレッドシート・データ整理
 
-<!-- Risk Level 1-2 depending on data content. Desktop app or Claude Code.
-     Examples:
-     - Cleaning and reformatting CSV/spreadsheet data
-     - Generating formulas and pivot table structures
-     - Summarizing data into a narrative report
-     WARN: If the spreadsheet contains customer data, treat as Level 2 or 3.
-     Anonymize before inputting. -->
+**リスクレベル：** ✅/⚠️ レベル1〜2（内容による）
+**使うツール：** ブラウザ版 / Claude Code + Google Workspaceスキル
+
+データの整理・変換・集計を自動化できます。
+
+**できること：**
+
+- CSVデータのクリーニングと再フォーマット
+- スプレッドシートの数式作成と説明
+- データから自動でサマリーレポートを生成
+- Google Sheetsと連携してデータを読み書き（MCPコネクタ使用時）
+
+**プロンプト例：**
+
+```
+以下のデータは、毎月の売上記録です（顧客名は仮名に変えています）。
+月別・担当者別の合計を計算し、上位3名を強調したサマリーを作成してください。
+
+[データをここに貼り付け]
+```
+
+> ⚠️ 実際の顧客名や個人情報を含むデータは、必ず匿名化してから入力してください。
 
 ---
 
 ## 4-3. プレゼンテーション・資料作成
 
-<!-- Risk Level 1. Uses the pptx skill or Google Slides connector.
-     Examples:
-     - Generating a slide deck outline from a brief
-     - Populating a template with new content
-     - Redesigning slide structure for clarity
-     NOTE: The pptx skill enables working with PowerPoint files directly in Claude Code. -->
+**リスクレベル：** ✅ レベル1
+**使うツール：** Claude Code + PPTXスキル / Google Slidesコネクタ
+
+プレゼン資料の骨格作りと内容生成を効率化できます。
+
+**できること：**
+
+- 要件や概要から、スライド構成（アウトライン）を自動生成
+- 既存のテンプレートに新しい内容を流し込む
+- テキスト原稿からスライドの箇条書きを作成
+- PowerPointファイル（.pptx）の直接編集
+
+**プロンプト例：**
+
+```
+新入社員向けのオンボーディング研修用スライドを作成してください。
+・対象：2026年度入社の新卒スタッフ
+・内容：会社概要、AI活用の方針、Claudeの使い方の基本
+・スライド枚数：10〜15枚
+・スタイル：わかりやすく、図解を多用
+```
 
 ---
 
 ## 4-4. 社内ツール・ダッシュボードの作成
 
-<!-- Risk Level 2-3 depending on data. Claude Code required.
-     Examples:
-     - HTML/CSS dashboard displaying internal KPIs
-     - Simple data visualization from a spreadsheet
-     - Internal form for collecting structured information
-     WARN: If the tool will be accessed by others, see Section 4-5 (deployment)
-     and Section 3-5 (when to involve an engineer). -->
+**リスクレベル：** ⚠️/🚫 レベル2〜3（公開範囲による）
+**使うツール：** Claude Code
+
+HTMLとCSSを使ったシンプルなWebツールやダッシュボードを作成できます。エンジニアでなくても、Claude Codeと協働することで実現できます。
+
+**できること：**
+
+- スプレッドシートのデータを視覚化するダッシュボード
+- 社内向けのフォームやデータ入力ツール
+- 定型業務を自動化する簡単なWebアプリ
+
+> ⚠️ 作成したツールを他の人がアクセスできる形で公開する場合は、**必ず§4-5（デプロイ）と§3-5（エンジニアへのエスカレーション）を確認してください**。
 
 ---
 
@@ -65,22 +116,48 @@
 <!-- Risk Level 3 for anything externally accessible. Engineer involvement required.
      This sub-section covers the deployment pipeline used for Section 4-4 outputs. -->
 
-### GitHub を使ったコード管理
+**リスクレベル：** 🚫 レベル3（外部公開の場合）
+**使うツール：** Claude Code + GitHub + Vercel
 
-<!-- All deployable projects should live in a GitHub repository (see Section 1-2).
-     Claude Code handles most git operations — staff need to understand what's happening,
-     not execute commands manually. -->
+§4-4で作成したツールを他のメンバーや社外の人が使えるようにするには、**デプロイ**（公開）の作業が必要です。
 
-### Vercel を使った公開
+> ⚠️ このサブセクションは「何が起きているかを理解する」ためのものです。
+> 実際のデプロイ作業はエンジニアと協力して行うことを強く推奨します。
 
-<!-- Vercel: connect a GitHub repo and it auto-deploys on every code push.
-     Good for: static sites, dashboards, internal tools, simple web apps.
-     Walk through the basic flow: GitHub repo → Vercel project → live URL. -->
+### GitHub でコードを管理する
 
-### 公開範囲とアクセス制御
+デプロイの前提として、プロジェクトのコードはGitHubリポジトリで管理されている必要があります（§1-2参照）。Claude Codeが自動的にコードを記録・管理してくれます。
 
-<!-- The most important decision before deploying: who can access this?
-     - Internal only: use Vercel password protection or Basic Auth as a minimum.
-     - External (customers/partners): requires proper authentication — involve an engineer.
-     NOTE: "It has a URL" does not mean "it is private." A URL with no access control
-     is publicly accessible. This is a common and costly mistake. -->
+### Vercel で公開する
+
+**Vercel**は、GitHubと連携してWebアプリを公開するためのプラットフォームです。
+
+基本的な流れ：
+
+1. GitHubリポジトリをVercelと連携する
+2. 以降は、GitHubにコードが保存（プッシュ）されるたびに、Vercelが自動的に最新版を公開する
+
+この仕組みにより、「コードを更新→自動で反映」のサイクルが簡単に実現できます。
+
+### 公開前に必ず決めること：アクセス範囲
+
+デプロイの前に、以下を必ず確認してください。
+
+**① 誰がアクセスできるか？**
+
+| アクセス範囲 | 対応方法 |
+|------------|---------|
+| 社内メンバーのみ | Vercelのパスワード保護、または社内ネットワーク制限 |
+| 特定の取引先 | 認証機能の実装（エンジニア必須） |
+| 一般公開 | セキュリティ設計・個人情報保護法対応（エンジニア必須） |
+
+> ⚠️ **「URLがあるから大丈夫」は間違いです。**
+> アクセス制御を設定しないURL（`https://...vercel.app`）は、URLを知っていれば誰でもアクセスできます。
+> これは社内限定ツールには適していません。
+
+**② APIキーや秘密情報は含まれていないか？**
+
+コード内にAPIキーやパスワードを直接書いていないか確認してください。詳細は§3-4を参照してください。
+
+<!-- NOTE: "A URL is not privacy" is the most common misunderstanding for non-technical staff
+     who deploy their first project. State it clearly and simply. -->
