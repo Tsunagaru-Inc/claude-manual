@@ -6,321 +6,493 @@
 <title>Claude 社内活用マニュアル — ツナガル株式会社</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-/* ── Reset & Base ─────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+/* ── Tokens ───────────────────────────────────────────────── */
 :root {
-  --bg:          #FFFFFF;
-  --bg-subtle:   #F8F8F6;
-  --bg-muted:    #F2F2F0;
-  --bg-code:     #F0F0ED;
-  --border:      #E4E4E0;
-  --border-mid:  #C8C8C4;
-  --text:        #1A1A1A;
-  --text-mid:    #4A4A4A;
-  --text-light:  #7A7A78;
-  --accent:      #1A1A1A;
-  --accent-rule: #D0D0CC;
-  --warn-bg:     #FFFCF0;
-  --warn-border: #C8A800;
-  --font-sans:   'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-  --font-mono:   'SFMono-Regular', 'Consolas', 'Liberation Mono', monospace;
-  --nav-w:       260px;
-  --content-max: 780px;
+  /* Warm neutral palette — OKLCH for perceptual uniformity */
+  --bg:           oklch(98.5% 0.006 80);
+  --bg-subtle:    oklch(96.8% 0.008 80);
+  --bg-muted:     oklch(94.0% 0.010 80);
+  --bg-code:      oklch(93.5% 0.010 75);
+  --bg-warn:      oklch(97.5% 0.030 90);
+  --border:       oklch(87.0% 0.010 80);
+  --border-mid:   oklch(76.0% 0.014 80);
+  --border-warn:  oklch(68.0% 0.090 85);
+  --text:         oklch(16.0% 0.014 80);
+  --text-mid:     oklch(44.0% 0.012 80);
+  --text-light:   oklch(62.0% 0.010 80);
+  --text-xlight:  oklch(76.0% 0.008 80);
+  --watermark:    oklch(92.0% 0.008 80);
+
+  --font-serif:   'Shippori Mincho B1', 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  --font-sans:    'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+  --font-mono:    'SFMono-Regular', 'Cascadia Code', 'Consolas', monospace;
+
+  --nav-w:        264px;
+  --content-max:  760px;
+  --pad-x:        clamp(2rem, 5vw, 4.5rem);
+
+  --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:  cubic-bezier(0.65, 0, 0.35, 1);
 }
 
+/* ── Reset ────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 16px; scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-sans);
   background: var(--bg);
   color: var(--text);
-  line-height: 1.8;
+  line-height: 1.85;
   -webkit-font-smoothing: antialiased;
-}
-
-/* ── Layout ───────────────────────────────────────────────── */
-.layout {
-  min-height: 100vh;
+  text-rendering: optimizeLegibility;
 }
 
 /* ── Sidebar ──────────────────────────────────────────────── */
 .sidebar {
   position: fixed;
-  top: 0; left: 0;
+  inset: 0 auto 0 0;
   width: var(--nav-w);
   height: 100vh;
   overflow-y: auto;
-  border-right: 1px solid var(--border);
+  overflow-x: hidden;
   background: var(--bg-subtle);
-  padding: 2rem 0 4rem;
+  border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  gap: 0;
+  padding-bottom: 3rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
 }
 
-.sidebar-header {
-  padding: 0 1.5rem 1.5rem;
+.sidebar-brand {
+  padding: 2rem 1.5rem 1.5rem;
   border-bottom: 1px solid var(--border);
-  margin-bottom: 1rem;
+  flex-shrink: 0;
 }
 
-.sidebar-header .company {
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
+.sidebar-brand .co {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-light);
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.5rem;
 }
 
-.sidebar-header .title {
-  font-size: 0.85rem;
+.sidebar-brand .title {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--text);
-  line-height: 1.4;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
 }
 
-.sidebar-header .version {
-  font-size: 0.7rem;
-  color: var(--text-light);
-  margin-top: 0.35rem;
+.sidebar-brand .ver {
+  margin-top: 0.5rem;
+  font-size: 0.67rem;
+  color: var(--text-xlight);
+  letter-spacing: 0.04em;
 }
 
-nav ul {
-  list-style: none;
-  padding: 0;
-}
+/* Nav */
+nav { padding: 0.75rem 0; }
 
-nav .nav-h1 > a {
-  display: block;
+nav ul { list-style: none; }
+
+.nav-h1 { margin-top: 0.35rem; }
+
+.nav-h1 > a {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
   padding: 0.45rem 1.5rem;
+  text-decoration: none;
+  transition: background 0.15s var(--ease-out);
+  border-radius: 0;
+}
+
+.nav-h2 > a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.3rem 1.5rem 0.3rem 2.75rem;
+  text-decoration: none;
+  transition: background 0.15s var(--ease-out);
+}
+
+.nav-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  background: var(--bg-muted);
+  border-radius: 50%;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-mid);
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+  font-variant-numeric: tabular-nums;
+}
+
+.nav-subnum {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-xlight);
+  min-width: 1.8rem;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.nav-label {
+  font-size: 0.75rem;
+  color: var(--text-mid);
+  line-height: 1.4;
+  transition: color 0.15s;
+}
+
+.nav-h1 .nav-label {
   font-size: 0.78rem;
   font-weight: 700;
   color: var(--text);
-  text-decoration: none;
-  letter-spacing: 0.01em;
-  transition: color 0.15s;
 }
 
-nav .nav-h2 > a {
-  display: block;
-  padding: 0.3rem 1.5rem 0.3rem 2.25rem;
-  font-size: 0.73rem;
-  font-weight: 400;
-  color: var(--text-mid);
-  text-decoration: none;
-  transition: color 0.15s;
-}
+.nav-h1 > a:hover .nav-num   { background: var(--border-mid); color: var(--text); }
+.nav-h1 > a:hover .nav-label { color: var(--text); }
+.nav-h2 > a:hover .nav-label { color: var(--text); }
+.nav-h2 > a:hover .nav-subnum { color: var(--text-mid); }
 
-nav li > a:hover { color: var(--text); }
+/* Active state */
+.nav-h1 > a.active { background: var(--bg-muted); }
+.nav-h1 > a.active .nav-num   { background: var(--text); color: var(--bg); }
+.nav-h1 > a.active .nav-label { color: var(--text); }
+.nav-h2 > a.active .nav-label { color: var(--text); font-weight: 500; }
+.nav-h2 > a.active .nav-subnum { color: var(--text-mid); }
 
-nav .nav-h1 { margin-top: 0.6rem; }
-
-nav .nav-h1 > a.active {
-  color: var(--text);
-  border-left: 2px solid var(--text);
-  padding-left: calc(1.5rem - 2px);
-}
-
-/* ── Main Content ─────────────────────────────────────────── */
+/* ── Main ─────────────────────────────────────────────────── */
 main {
   margin-left: var(--nav-w);
-  padding: 4rem 4rem 8rem;
+  padding: clamp(3rem, 6vw, 5rem) var(--pad-x) clamp(5rem, 10vw, 8rem);
 }
 
-.content {
-  max-width: var(--content-max);
-}
+.content { max-width: var(--content-max); }
 
 /* ── Cover ────────────────────────────────────────────────── */
 .cover {
-  padding: 4rem 0 5rem;
+  padding: clamp(3rem, 6vw, 5rem) 0 clamp(3.5rem, 6vw, 5rem);
+  margin-bottom: clamp(3rem, 6vw, 4.5rem);
   border-bottom: 1px solid var(--border);
-  margin-bottom: 4rem;
+  position: relative;
 }
 
-.cover .kana {
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: var(--text-light);
+.cover-co {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  margin-bottom: 1rem;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
 }
 
 .cover h1 {
-  font-size: 2.25rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 3.75rem);
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.15;
   letter-spacing: -0.01em;
   color: var(--text);
-  margin-bottom: 1rem;
+  margin-bottom: 1.75rem;
+  /* No data-num watermark on cover h1 */
+}
+.cover h1::before { display: none; }
+
+.cover-rule {
+  width: 3rem;
+  height: 2px;
+  background: var(--border-mid);
+  margin-bottom: 1.5rem;
 }
 
-.cover .subtitle {
-  font-size: 1rem;
+.cover-desc {
+  font-size: 0.97rem;
   color: var(--text-mid);
-  line-height: 1.6;
-  max-width: 540px;
-  margin-bottom: 2rem;
+  line-height: 1.8;
+  max-width: 52ch;
+  margin-bottom: 2.5rem;
 }
 
-.cover .meta {
-  font-size: 0.75rem;
-  color: var(--text-light);
+.cover-meta {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
-.cover .meta span::before {
-  content: '—';
-  margin-right: 0.4rem;
-  opacity: 0.4;
+.cover-meta span {
+  font-size: 0.72rem;
+  color: var(--text-light);
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cover-meta span::before {
+  content: '';
+  display: inline-block;
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 50%;
+  background: var(--border-mid);
 }
 
 /* ── TOC ──────────────────────────────────────────────────── */
 .toc {
-  background: var(--bg-subtle);
   border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 2rem 2.25rem;
-  margin-bottom: 4rem;
+  border-radius: 4px;
+  padding: 2rem 2.5rem;
+  margin-bottom: clamp(3rem, 6vw, 5rem);
+  background: var(--bg-subtle);
 }
 
-.toc h2 {
-  font-size: 0.7rem;
+.toc-head {
+  font-size: 0.67rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-light);
   margin-bottom: 1.25rem;
-  border: none;
-  padding: 0;
 }
 
-.toc ol {
-  list-style: none;
-  counter-reset: toc-counter;
-  display: grid;
-  gap: 0.2rem;
-}
+.toc ol { list-style: none; display: grid; gap: 0; }
 
 .toc li {
   display: flex;
   align-items: baseline;
   gap: 0.75rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--border);
   font-size: 0.88rem;
-  color: var(--text-mid);
+}
+.toc li:last-child { border-bottom: none; }
+
+.toc-num {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-xlight);
+  min-width: 1.4rem;
+  font-variant-numeric: tabular-nums;
 }
 
-.toc li a {
+.toc a {
   color: var(--text);
   text-decoration: none;
   font-weight: 500;
 }
+.toc a:hover { text-decoration: underline; text-underline-offset: 2px; }
 
-.toc li a:hover { text-decoration: underline; }
-
-.toc .toc-num {
+.toc-note {
   font-size: 0.72rem;
-  font-weight: 700;
   color: var(--text-light);
-  min-width: 1.5rem;
-  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+  margin-left: 0.35rem;
 }
 
 /* ── Sections ─────────────────────────────────────────────── */
 section {
-  margin-bottom: 5rem;
-  padding-top: 1rem;
+  margin-bottom: clamp(4rem, 8vw, 6.5rem);
+  padding-top: 0.5rem;
+}
+
+/* Scroll entrance */
+.fade-in {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out);
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ── Headings ─────────────────────────────────────────────── */
 h1 {
-  font-size: 1.9rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.75rem, 3.5vw, 2.4rem);
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--text);
-  margin-bottom: 2rem;
-  padding-bottom: 1rem;
-  border-bottom: 1.5px solid var(--border);
+  margin-bottom: 2.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: visible;
+}
+
+/* Large watermark number behind h1 */
+h1[data-num]::before {
+  content: attr(data-num);
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-55%);
+  font-family: var(--font-serif);
+  font-size: clamp(4rem, 8vw, 6.5rem);
+  font-weight: 700;
+  color: var(--watermark);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.04em;
 }
 
 h2 {
-  font-size: 1.2rem;
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 2vw, 1.15rem);
   font-weight: 700;
   color: var(--text);
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
-  padding-left: 0.85rem;
-  border-left: 3px solid var(--text);
+  margin-top: clamp(2rem, 4vw, 2.75rem);
+  margin-bottom: 0.85rem;
   line-height: 1.4;
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+}
+
+.h2-num {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-xlight);
+  letter-spacing: 0.03em;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  padding-top: 0.15em;
 }
 
 h3 {
-  font-size: 0.98rem;
+  font-family: var(--font-sans);
+  font-size: clamp(0.92rem, 1.5vw, 1rem);
   font-weight: 700;
   color: var(--text);
   margin-top: 1.75rem;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.55rem;
   line-height: 1.4;
+  padding-left: 0.75rem;
+  border-left: 2px solid var(--border-mid);
 }
 
 h4 {
-  font-size: 0.88rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
   font-weight: 700;
   color: var(--text-mid);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-top: 1.25rem;
+  letter-spacing: 0.08em;
+  margin-top: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
 /* ── Body copy ────────────────────────────────────────────── */
 p {
-  font-size: 0.95rem;
-  line-height: 1.85;
+  font-size: clamp(0.9rem, 1.5vw, 0.97rem);
+  line-height: 1.9;
   color: var(--text);
-  margin-bottom: 1rem;
-  max-width: 68ch;
+  margin-bottom: 0.9rem;
+  max-width: 66ch;
 }
 
 /* ── Lists ────────────────────────────────────────────────── */
 ul, ol {
-  padding-left: 1.5rem;
-  margin-bottom: 1rem;
+  padding-left: 1.4rem;
+  margin-bottom: 0.9rem;
 }
 
 li {
-  font-size: 0.93rem;
-  line-height: 1.75;
+  font-size: clamp(0.88rem, 1.5vw, 0.94rem);
+  line-height: 1.8;
   color: var(--text);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.2rem;
+  max-width: 66ch;
 }
 
-ul.checklist { list-style: none; padding-left: 0.25rem; }
-ul.checklist li { display: flex; align-items: baseline; gap: 0.5rem; }
-ul.checklist input[type="checkbox"] { margin-top: 0.15rem; }
+ul { list-style: none; padding-left: 0; }
+ul li { padding-left: 1.2rem; position: relative; }
+ul li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--text-xlight);
+  font-weight: 400;
+}
 
-/* ── Blockquote / Callout ─────────────────────────────────── */
+ol { counter-reset: list-counter; padding-left: 0; }
+ol li {
+  counter-increment: list-counter;
+  padding-left: 1.8rem;
+  position: relative;
+}
+ol li::before {
+  content: counter(list-counter) '.';
+  position: absolute;
+  left: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-light);
+  top: 0.2em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Checklist */
+ul.checklist { list-style: none; padding-left: 0; }
+ul.checklist li { padding-left: 1.6rem; position: relative; }
+ul.checklist li::before { display: none; }
+.checkbox {
+  position: absolute;
+  left: 0;
+  top: 0.3em;
+  width: 0.85rem;
+  height: 0.85rem;
+  border: 1.5px solid var(--border-mid);
+  border-radius: 2px;
+  background: var(--bg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.checkbox.checked {
+  background: var(--text);
+  border-color: var(--text);
+}
+.checkbox.checked::after {
+  content: '';
+  display: block;
+  width: 0.4rem;
+  height: 0.25rem;
+  border-left: 1.5px solid var(--bg);
+  border-bottom: 1.5px solid var(--bg);
+  transform: rotate(-45deg) translate(0.5px, -0.5px);
+}
+
+/* ── Blockquotes ──────────────────────────────────────────── */
 blockquote {
-  border-left: 3px solid var(--border-mid);
-  background: var(--bg-muted);
-  padding: 0.85rem 1.25rem;
   margin: 1.25rem 0;
-  border-radius: 0 4px 4px 0;
-  font-size: 0.9rem;
+  padding: 0.9rem 1.25rem;
+  background: var(--bg-subtle);
+  border-left: 3px solid var(--border-mid);
+  border-radius: 0 3px 3px 0;
+  font-size: 0.88rem;
   color: var(--text-mid);
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 blockquote.warn {
-  border-left-color: var(--warn-border);
-  background: var(--warn-bg);
+  background: var(--bg-warn);
+  border-left-color: var(--border-warn);
   color: var(--text);
 }
 
@@ -329,20 +501,39 @@ blockquote strong { color: var(--text); }
 /* ── Code ─────────────────────────────────────────────────── */
 code {
   font-family: var(--font-mono);
-  font-size: 0.82em;
+  font-size: 0.83em;
   background: var(--bg-code);
   padding: 0.1em 0.35em;
   border-radius: 3px;
   color: var(--text);
 }
 
+.code-wrap {
+  position: relative;
+  margin: 1.25rem 0;
+}
+
+.code-lang {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-xlight);
+  pointer-events: none;
+  user-select: none;
+}
+
 pre {
   background: var(--bg-code);
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: 4px;
   padding: 1.25rem 1.5rem;
   overflow-x: auto;
-  margin: 1.25rem 0;
+  tab-size: 2;
 }
 
 pre code {
@@ -351,150 +542,170 @@ pre code {
   font-size: 0.82rem;
   line-height: 1.65;
   color: var(--text);
+  border-radius: 0;
 }
 
 /* ── Tables ───────────────────────────────────────────────── */
+.table-wrap {
+  margin: 1.25rem 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.87rem;
-  margin: 1.25rem 0;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  overflow: hidden;
+  font-size: 0.86rem;
+  min-width: 400px;
 }
 
 th, td {
-  padding: 0.65rem 1rem;
+  padding: 0.7rem 1.1rem;
   text-align: left;
-  border-bottom: 1px solid var(--border);
   line-height: 1.55;
   vertical-align: top;
+  border-bottom: 1px solid var(--border);
 }
 
-tr.header th {
-  background: var(--bg-muted);
+th {
+  font-size: 0.76rem;
   font-weight: 700;
-  font-size: 0.8rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
   color: var(--text-mid);
+  background: var(--bg-muted);
   border-bottom: 1.5px solid var(--border-mid);
+  white-space: nowrap;
 }
 
-tr.even td { background: var(--bg-subtle); }
-tr:last-child td, tr:last-child th { border-bottom: none; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg-subtle); transition: background 0.1s; }
 
 /* ── HR ───────────────────────────────────────────────────── */
 hr {
   border: none;
   border-top: 1px solid var(--border);
-  margin: 2.5rem 0;
+  margin: 2.25rem 0;
 }
 
 /* ── Links ────────────────────────────────────────────────── */
-a { color: var(--text); text-decoration: underline; text-underline-offset: 2px; }
-a:hover { opacity: 0.7; }
+a {
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--border-mid);
+  text-underline-offset: 2px;
+  transition: text-decoration-color 0.15s;
+}
+a:hover { text-decoration-color: var(--text); }
 
 /* ── Print ────────────────────────────────────────────────── */
 @media print {
+  :root { --nav-w: 0px; }
   .sidebar { display: none; }
-  main { margin-left: 0; padding: 1.5rem 2rem; }
-  .cover { padding: 2rem 0 3rem; }
+  main { margin-left: 0; padding: 1.5rem 2.5rem; }
+  .cover { padding: 2rem 0 2.5rem; }
+  .cover h1 { font-size: 2.25rem; }
   section { page-break-inside: avoid; }
-  h1, h2 { page-break-after: avoid; }
-  pre, table, blockquote { page-break-inside: avoid; }
+  h1, h2, h3 { page-break-after: avoid; }
+  pre, table, blockquote, .table-wrap { page-break-inside: avoid; }
   a { text-decoration: none; }
+  .fade-in { opacity: 1; transform: none; }
+  .cover h1::before { opacity: 0.06; }
+  h1[data-num]::before { opacity: 0.06; }
 }
 
 /* ── Mobile ───────────────────────────────────────────────── */
-@media (max-width: 900px) {
-  .layout { grid-template-columns: 1fr; }
+@media (max-width: 920px) {
+  :root { --nav-w: 0px; }
   .sidebar { display: none; }
   main { margin-left: 0; padding: 2rem 1.5rem 5rem; }
-  .cover h1 { font-size: 1.65rem; }
-  h1 { font-size: 1.5rem; }
+  .cover h1 { font-size: 2rem; }
+  h1[data-num]::before { font-size: 4rem; opacity: 0.7; }
+}
+
+/* ── Reduced motion ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
 }
 </style>
 </head>
 <body>
 <div class="layout">
 
-<!-- Sidebar nav -->
-<aside class="sidebar">
-  <div class="sidebar-header">
-    <div class="company">ツナガル株式会社</div>
+<aside class="sidebar" aria-label="ナビゲーション">
+  <div class="sidebar-brand">
+    <div class="co">ツナガル株式会社</div>
     <div class="title">Claude<br>社内活用マニュアル</div>
-    <div class="version">v0.2 · 2026年3月</div>
+    <div class="ver">Version 0.2 &thinsp;·&thinsp; 2026年3月</div>
   </div>
-  <nav aria-label="目次">
+  <nav>
     <ul>
-<li class="nav-h1"><a href="#0-claudeとは何か">0. Claudeとは何か</a></li>
-<li class="nav-h2"><a href="#0-1-claudeの概要">0-1. Claudeの概要</a></li>
-<li class="nav-h2"><a href="#0-2-モデルの比較">0-2. モデルの比較</a></li>
-<li class="nav-h2"><a href="#0-3-aiツール活用の心構え">0-3. AIツール活用の心構え</a></li>
-<li class="nav-h1"><a href="#1-claudeの導入方法">1. Claudeの導入方法</a></li>
-<li class="nav-h2"><a href="#1-1-利用プラットフォームの選び方">1-1. 利用プラットフォームの選び方</a></li>
-<li class="nav-h2"><a href="#1-2-バージョン管理の基本github">1-2. バージョン管理の基本（GitHub）</a></li>
-<li class="nav-h1"><a href="#2-claudeの使い方">2. Claudeの使い方</a></li>
-<li class="nav-h2"><a href="#2-1-プロンプトの仕組み">2-1. プロンプトの仕組み</a></li>
-<li class="nav-h2"><a href="#2-2-claudemd-プロジェクトの憲法">2-2. CLAUDE.md — プロジェクトの「憲法」</a></li>
-<li class="nav-h1"><a href="#プロジェクト社内レポート自動化">プロジェクト：社内レポート自動化</a></li>
-<li class="nav-h2"><a href="#目的">目的</a></li>
-<li class="nav-h2"><a href="#出力ルール">出力ルール</a></li>
-<li class="nav-h2"><a href="#セキュリティ">セキュリティ</a></li>
-<li class="nav-h2"><a href="#禁止事項">禁止事項</a></li>
-<li class="nav-h2"><a href="#2-3-利用モードの違い">2-3. 利用モードの違い</a></li>
-<li class="nav-h2"><a href="#2-4-claudeのツール拡張">2-4. Claudeのツール拡張</a></li>
-<li class="nav-h2"><a href="#2-5-外部cliツールの準備">2-5. 外部CLIツールの準備</a></li>
-<li class="nav-h1"><a href="#3-セキュリティの考え方">3. セキュリティの考え方</a></li>
-<li class="nav-h2"><a href="#3-1-なぜai利用にはリスクがあるのか">3-1. なぜAI利用にはリスクがあるのか</a></li>
-<li class="nav-h2"><a href="#3-2-情報のリスクレベル分類">3-2. 情報のリスクレベル分類</a></li>
-<li class="nav-h2"><a href="#3-3-絶対に入力してはいけない情報">3-3. 絶対に入力してはいけない情報</a></li>
-<li class="nav-h2"><a href="#3-4-シークレット管理の基本">3-4. シークレット管理の基本</a></li>
-<li class="nav-h2"><a href="#3-5-エンジニアを必ず関与させるケース">3-5. エンジニアを必ず関与させるケース</a></li>
-<li class="nav-h1"><a href="#4-活用事例">4. 活用事例</a></li>
-<li class="nav-h2"><a href="#4-1-文書作成翻訳要約">4-1. 文書作成・翻訳・要約</a></li>
-<li class="nav-h2"><a href="#4-2-スプレッドシートデータ整理">4-2. スプレッドシート・データ整理</a></li>
-<li class="nav-h2"><a href="#4-3-プレゼンテーション資料作成">4-3. プレゼンテーション・資料作成</a></li>
-<li class="nav-h2"><a href="#4-4-社内ツールダッシュボードの作成">4-4. 社内ツール・ダッシュボードの作成</a></li>
-<li class="nav-h2"><a href="#4-5-アプリツールの公開デプロイ">4-5. アプリ・ツールの公開（デプロイ）</a></li>
+<li class="nav-h1"><a href="#0-claudeとは何か"><span class="nav-num">0</span><span class="nav-label">Claudeとは何か</span></a></li>
+<li class="nav-h2"><a href="#0-1-claudeの概要"><span class="nav-subnum">0-1</span><span class="nav-label">Claudeの概要</span></a></li>
+<li class="nav-h2"><a href="#0-2-モデルの比較"><span class="nav-subnum">0-2</span><span class="nav-label">モデルの比較</span></a></li>
+<li class="nav-h2"><a href="#0-3-aiツール活用の心構え"><span class="nav-subnum">0-3</span><span class="nav-label">AIツール活用の心構え</span></a></li>
+<li class="nav-h1"><a href="#1-claudeの導入方法"><span class="nav-num">1</span><span class="nav-label">Claudeの導入方法</span></a></li>
+<li class="nav-h2"><a href="#1-1-利用プラットフォームの選び方"><span class="nav-subnum">1-1</span><span class="nav-label">利用プラットフォームの選び方</span></a></li>
+<li class="nav-h2"><a href="#1-2-バージョン管理の基本github"><span class="nav-subnum">1-2</span><span class="nav-label">バージョン管理の基本（GitHub）</span></a></li>
+<li class="nav-h1"><a href="#2-claudeの使い方"><span class="nav-num">2</span><span class="nav-label">Claudeの使い方</span></a></li>
+<li class="nav-h2"><a href="#2-1-プロンプトの仕組み"><span class="nav-subnum">2-1</span><span class="nav-label">プロンプトの仕組み</span></a></li>
+<li class="nav-h2"><a href="#2-2-claudemd-プロジェクトの憲法"><span class="nav-subnum">2-2</span><span class="nav-label">CLAUDE.md — プロジェクトの「憲法」</span></a></li>
+<li class="nav-h1"><a href="#プロジェクト社内レポート自動化"><span class="nav-num"></span><span class="nav-label">プロジェクト：社内レポート自動化</span></a></li>
+<li class="nav-h2"><a href="#目的"><span class="nav-subnum"></span><span class="nav-label">目的</span></a></li>
+<li class="nav-h2"><a href="#出力ルール"><span class="nav-subnum"></span><span class="nav-label">出力ルール</span></a></li>
+<li class="nav-h2"><a href="#セキュリティ"><span class="nav-subnum"></span><span class="nav-label">セキュリティ</span></a></li>
+<li class="nav-h2"><a href="#禁止事項"><span class="nav-subnum"></span><span class="nav-label">禁止事項</span></a></li>
+<li class="nav-h2"><a href="#2-3-利用モードの違い"><span class="nav-subnum">2-3</span><span class="nav-label">利用モードの違い</span></a></li>
+<li class="nav-h2"><a href="#2-4-claudeのツール拡張"><span class="nav-subnum">2-4</span><span class="nav-label">Claudeのツール拡張</span></a></li>
+<li class="nav-h2"><a href="#2-5-外部cliツールの準備"><span class="nav-subnum">2-5</span><span class="nav-label">外部CLIツールの準備</span></a></li>
+<li class="nav-h1"><a href="#3-セキュリティの考え方"><span class="nav-num">3</span><span class="nav-label">セキュリティの考え方</span></a></li>
+<li class="nav-h2"><a href="#3-1-なぜai利用にはリスクがあるのか"><span class="nav-subnum">3-1</span><span class="nav-label">なぜAI利用にはリスクがあるのか</span></a></li>
+<li class="nav-h2"><a href="#3-2-情報のリスクレベル分類"><span class="nav-subnum">3-2</span><span class="nav-label">情報のリスクレベル分類</span></a></li>
+<li class="nav-h2"><a href="#3-3-絶対に入力してはいけない情報"><span class="nav-subnum">3-3</span><span class="nav-label">絶対に入力してはいけない情報</span></a></li>
+<li class="nav-h2"><a href="#3-4-シークレット管理の基本"><span class="nav-subnum">3-4</span><span class="nav-label">シークレット管理の基本</span></a></li>
+<li class="nav-h2"><a href="#3-5-エンジニアを必ず関与させるケース"><span class="nav-subnum">3-5</span><span class="nav-label">エンジニアを必ず関与させるケース</span></a></li>
+<li class="nav-h1"><a href="#4-活用事例"><span class="nav-num">4</span><span class="nav-label">活用事例</span></a></li>
+<li class="nav-h2"><a href="#4-1-文書作成翻訳要約"><span class="nav-subnum">4-1</span><span class="nav-label">文書作成・翻訳・要約</span></a></li>
+<li class="nav-h2"><a href="#4-2-スプレッドシートデータ整理"><span class="nav-subnum">4-2</span><span class="nav-label">スプレッドシート・データ整理</span></a></li>
+<li class="nav-h2"><a href="#4-3-プレゼンテーション資料作成"><span class="nav-subnum">4-3</span><span class="nav-label">プレゼンテーション・資料作成</span></a></li>
+<li class="nav-h2"><a href="#4-4-社内ツールダッシュボードの作成"><span class="nav-subnum">4-4</span><span class="nav-label">社内ツール・ダッシュボードの作成</span></a></li>
+<li class="nav-h2"><a href="#4-5-アプリツールの公開デプロイ"><span class="nav-subnum">4-5</span><span class="nav-label">アプリ・ツールの公開（デプロイ）</span></a></li>
     </ul>
   </nav>
 </aside>
 
-<!-- Main -->
 <main>
 <div class="content">
 
-<!-- Cover -->
 <div class="cover">
-  <div class="kana">ツナガル株式会社</div>
+  <div class="cover-co">ツナガル株式会社</div>
   <h1>Claude<br>社内活用マニュアル</h1>
-  <p class="subtitle">Claudeを業務に取り入れるための実践的なガイドです。ツールの使い方だけでなく、安全で持続可能なAI活用の土台づくりを目的としています。</p>
-  <div class="meta">
-    <span>バージョン 0.2</span>
+  <div class="cover-rule"></div>
+  <p class="cover-desc">Claudeを業務に取り入れるための実践的なガイドです。ツールの使い方だけでなく、安全で持続可能なAI活用の土台づくりを目的としています。</p>
+  <div class="cover-meta">
+    <span>Version 0.2</span>
     <span>2026年3月</span>
     <span>全スタッフ対象</span>
   </div>
 </div>
 
-<!-- TOC -->
-<div class="toc">
-  <h2>目次</h2>
+<div class="toc" aria-label="目次">
+  <div class="toc-head">目次</div>
   <ol>
     <li><span class="toc-num">0</span><a href="#0-claudeとは何か">Claudeとは何か</a></li>
     <li><span class="toc-num">1</span><a href="#1-claudeの導入方法">Claudeの導入方法</a></li>
     <li><span class="toc-num">2</span><a href="#2-claudeの使い方">Claudeの使い方</a></li>
-    <li><span class="toc-num">3</span><a href="#3-セキュリティの考え方">セキュリティの考え方 ← まずここから</a></li>
+    <li><span class="toc-num">3</span><a href="#3-セキュリティの考え方">セキュリティの考え方 <span class="toc-note">← まずここを読む</span></a></li>
     <li><span class="toc-num">4</span><a href="#4-活用事例">活用事例</a></li>
   </ol>
 </div>
 
-<!-- Sections -->
-<section>
-<h1 id="0-claudeとは何か">0. Claudeとは何か</h1>
+<section data-sec="0" class="fade-in">
+<h1 id="0-claudeとは何か" data-num="0">Claudeとは何か</h1>
 <hr>
-<h2 id="0-1-claudeの概要">0-1. Claudeの概要</h2>
+<h2 id="0-1-claudeの概要"><span class="h2-num">0-1</span>Claudeの概要</h2>
 <p>Claudeは、Anthropicが開発した<strong>AIアシスタント</strong>です。文章を読んで理解し、質問に答え、文書を作成し、コードを書き、複雑な問題を一緒に考えることができます。</p>
 <p>よく「AIチャットボット」と呼ばれますが、従来のチャットボットとは大きく異なります。従来のボットは決まった質問に決まった答えを返すだけでしたが、Claudeは文脈を理解し、曖昧な指示にも柔軟に対応し、長い会話の流れを記憶しながら作業を進めることができます。</p>
 <p><strong>Claudeが得意なこと:</strong></p>
@@ -512,17 +723,17 @@ a:hover { opacity: 0.7; }
   <li>機密性の高い判断（法律・医療・財務上の最終判断は専門家に委ねること）</li>
 </ul>
 <hr>
-<h2 id="0-2-モデルの比較">0-2. モデルの比較</h2>
+<h2 id="0-2-モデルの比較"><span class="h2-num">0-2</span>モデルの比較</h2>
 <p>Claudeには複数のモデルがあり、速度・精度・コストのバランスが異なります。用途に応じて使い分けることで、コストを抑えながら最適な出力を得られます。</p>
-<table>
-<tr class="header"><th>モデル</th><th>特徴</th><th>向いている用途</th></tr>
+<div class="table-wrap"><table>
+<tr><th>モデル</th><th>特徴</th><th>向いている用途</th></tr>
 <tr><td><strong>Claude Haiku</strong></td><td>高速・低コスト</td><td>簡単な質問、翻訳、短い要約</td></tr>
-<tr class="even"><td><strong>Claude Sonnet</strong></td><td>バランス型（推奨）</td><td>文書作成、分析、日常業務全般</td></tr>
+<tr><td><strong>Claude Sonnet</strong></td><td>バランス型（推奨）</td><td>文書作成、分析、日常業務全般</td></tr>
 <tr><td><strong>Claude Opus</strong></td><td>高精度・低速</td><td>複雑な分析、戦略的な判断支援</td></tr>
-</table>
+</table></div>
 <p>日常業務では<strong>Claude Sonnet</strong>が最もバランスよく使えます。特に指定がなければSonnetを使ってください。</p>
 <hr>
-<h2 id="0-3-aiツール活用の心構え">0-3. AIツール活用の心構え</h2>
+<h2 id="0-3-aiツール活用の心構え"><span class="h2-num">0-3</span>AIツール活用の心構え</h2>
 <p>Claudeを導入する前に、チーム全員で共有しておきたい考え方があります。</p>
 <h3 id="claudeは優秀だが間違えるアシスタント">Claudeは「優秀だが間違えるアシスタント」</h3>
 <p>Claudeは非常に有能なアシスタントですが、<strong>常に正しいわけではありません</strong>。自信を持って誤った情報を出力することがあります（これを「ハルシネーション」と呼びます）。重要な判断を下す前は、必ずClaudeの出力を自分で確認してください。</p>
@@ -535,22 +746,22 @@ a:hover { opacity: 0.7; }
 <p>このマニュアルは、Claudeを「正しく・安全に・効果的に」使うための道標です。最初から全部読む必要はありません。<strong>まずセクション3（セキュリティ）を読んでから</strong>、使いたい機能のセクションに進んでください。</p>
 </section>
 
-<section>
-<h1 id="1-claudeの導入方法">1. Claudeの導入方法</h1>
+<section data-sec="1" class="fade-in">
+<h1 id="1-claudeの導入方法" data-num="1">Claudeの導入方法</h1>
 <hr>
-<h2 id="1-1-利用プラットフォームの選び方">1-1. 利用プラットフォームの選び方</h2>
+<h2 id="1-1-利用プラットフォームの選び方"><span class="h2-num">1-1</span>利用プラットフォームの選び方</h2>
 <p>Claudeにはいくつかのアクセス方法があります。自分の役割や目的に合ったものを選んでください。</p>
 <h3 id="どれを使えばいいか早見表">どれを使えばいいか（早見表）</h3>
-<table>
-<tr class="header"><th>役割</th><th>推奨プラットフォーム</th></tr>
+<div class="table-wrap"><table>
+<tr><th>役割</th><th>推奨プラットフォーム</th></tr>
 <tr><td>一般スタッフ（文書作成・翻訳・Q&amp;A）</td><td>ブラウザ版（claude.ai）</td></tr>
-<tr class="even"><td>スタッフ（SlackやGoogleとの連携も使いたい）</td><td>デスクトップアプリ</td></tr>
+<tr><td>スタッフ（SlackやGoogleとの連携も使いたい）</td><td>デスクトップアプリ</td></tr>
 <tr><td>エンジニア（開発・ファイル操作・デプロイ）</td><td>Claude Code</td></tr>
-<tr class="even"><td>開発者（外部システムとの自動連携を作る）</td><td>API</td></tr>
-</table>
+<tr><td>開発者（外部システムとの自動連携を作る）</td><td>API</td></tr>
+</table></div>
 <hr>
 <h3 id="ブラウザ版claudeai">ブラウザ版（claude.ai）</h3>
-<p><strong>最もシンプルな使い方です。</strong> ブラウザで <a href="https://claude.ai">claude.ai</a> にアクセスし、アカウントを作成するだけで使い始められます。</p>
+<p><strong>最もシンプルな使い方です。</strong> ブラウザで <a href="https://claude.ai" target="_blank" rel="noopener">claude.ai</a> にアクセスし、アカウントを作成するだけで使い始められます。</p>
 <ul>
   <li>インストール不要</li>
   <li>ファイルのアップロードや画像の読み込みも可能</li>
@@ -560,7 +771,7 @@ a:hover { opacity: 0.7; }
 <h3 id="デスクトップアプリmac-windows">デスクトップアプリ（Mac / Windows）</h3>
 <p>ブラウザ版と機能は同じですが、<strong>MCPコネクタ</strong>（SlackやGoogleカレンダーなどの外部連携）が使えるようになります。</p>
 <ul>
-  <li><a href="https://claude.ai/download">公式サイト</a> からダウンロード・インストール</li>
+  <li><a href="https://claude.ai/download" target="_blank" rel="noopener">公式サイト</a> からダウンロード・インストール</li>
   <li>外部ツールと連携したい方向け</li>
 </ul>
 <hr>
@@ -572,7 +783,7 @@ a:hover { opacity: 0.7; }
   <li>初めて使う方はエンジニアのサポートを受けることを推奨</li>
 </ul>
 <p>インストールコマンド（ターミナルに貼り付けて実行）：</p>
-<pre><code class="language-bash">npm install -g @anthropic-ai/claude-code</code></pre>
+<div class="code-wrap"><span class="code-lang">bash</span><pre><code>npm install -g @anthropic-ai/claude-code</code></pre></div>
 <hr>
 <h3 id="api開発者向け">API（開発者向け）</h3>
 <p>Anthropic APIは、Claudeを外部システムやアプリケーションに組み込むための開発者向けインターフェースです。</p>
@@ -582,7 +793,7 @@ a:hover { opacity: 0.7; }
   <li><strong>エンジニア専用です。一般スタッフが直接使用するものではありません</strong></li>
 </ul>
 <hr>
-<h2 id="1-2-バージョン管理の基本github">1-2. バージョン管理の基本（GitHub）</h2>
+<h2 id="1-2-バージョン管理の基本github"><span class="h2-num">1-2</span>バージョン管理の基本（GitHub）</h2>
 <p>Claude Codeを使ってプロジェクトを進める場合、作業の記録には<strong>GitHub</strong>を使います。</p>
 <h3 id="バージョン管理とはなにか">バージョン管理とはなにか</h3>
 <p>バージョン管理とは、<strong>ファイルの変更履歴を記録する仕組み</strong>です。Googleドキュメントの「変更履歴」に似ていますが、あらゆるファイル形式に対応しており、複数人での共同作業も安全に行えます。</p>
@@ -595,23 +806,23 @@ a:hover { opacity: 0.7; }
 </ul>
 <h3 id="githubとツナガル社のorganization">GitHubとツナガル社のOrganization</h3>
 <p><strong>GitHub</strong>は、バージョン管理のホスティングサービスです。会社のファイル・コードをクラウド上に保管し、チームで共有します。</p>
-<p>ツナガル株式会社のGitHub Organizationは <strong><a href="https://github.com/Tsunagaru-Inc">github.com/Tsunagaru-Inc</a></strong> です。エンジニアが管理しており、プロジェクト単位でリポジトリ（＝プロジェクトフォルダ）が作成されます。</p>
+<p>ツナガル株式会社のGitHub Organizationは <strong><a href="https://github.com/Tsunagaru-Inc" target="_blank" rel="noopener">github.com/Tsunagaru-Inc</a></strong> です。エンジニアが管理しており、プロジェクト単位でリポジトリ（＝プロジェクトフォルダ）が作成されます。</p>
 <p>組織としてClaudeを活用するうえで特に有効なのが、<strong>共通のCLAUDE.mdテンプレートと承認済みスキルリストをGitHub Organizationで管理する</strong>ことです。新しいプロジェクトを始めるとき、このテンプレートを出発点にすることで、全プロジェクトに最低限のセキュリティルールと出力フォーマットが自動的に適用されます。詳細は§2-2（CLAUDE.md）と§2-4（スキル）を参照してください。</p>
 <h3 id="知っておくべき3つの概念">知っておくべき3つの概念</h3>
 <p>Claude Codeを使っていると、以下の操作をClaude自身が行います。意味を知っていれば、Claudeの確認ダイアログで慌てなくて済みます。</p>
-<table>
-<tr class="header"><th>操作</th><th>意味</th></tr>
+<div class="table-wrap"><table>
+<tr><th>操作</th><th>意味</th></tr>
 <tr><td><strong>クローン（clone）</strong></td><td>GitHub上のリポジトリをPCにダウンロードする</td></tr>
-<tr class="even"><td><strong>コミット（commit）</strong></td><td>現在の変更を「記録」として保存する</td></tr>
+<tr><td><strong>コミット（commit）</strong></td><td>現在の変更を「記録」として保存する</td></tr>
 <tr><td><strong>プッシュ（push）</strong></td><td>ローカルの記録をGitHub（クラウド）にアップロードする</td></tr>
-</table>
+</table></div>
 <blockquote><strong>Claude Codeが「コミットしますか？」と聞いてきたら：</strong><br>「はい」を選ぶと、現在の作業状態が記録されます。問題ありません。<br>不安な場合は「内容を確認してからにします」とClaude Codeに伝えれば、操作の説明を受けられます。</blockquote>
 </section>
 
-<section>
-<h1 id="2-claudeの使い方">2. Claudeの使い方</h1>
+<section data-sec="2" class="fade-in">
+<h1 id="2-claudeの使い方" data-num="2">Claudeの使い方</h1>
 <hr>
-<h2 id="2-1-プロンプトの仕組み">2-1. プロンプトの仕組み</h2>
+<h2 id="2-1-プロンプトの仕組み"><span class="h2-num">2-1</span>プロンプトの仕組み</h2>
 <p>Claudeに何かをお願いするとき、あなたが入力するテキストを<strong>プロンプト</strong>と呼びます。 プロンプトの書き方が、Claudeの出力の質を大きく左右します。</p>
 <h3 id="システムプロンプトとユーザープロンプト">システムプロンプトとユーザープロンプト</h3>
 <p>Claudeへの指示には、2種類あります。</p>
@@ -621,14 +832,14 @@ a:hover { opacity: 0.7; }
 <blockquote>システムプロンプト ＝ 「あなたはこういう仕事をする人です」という職務定義<br>ユーザープロンプト ＝ 「今日はこれをやってください」という日々の指示</blockquote>
 <h3 id="良いプロンプトの書き方">良いプロンプトの書き方</h3>
 <p>Claudeへの指示は、具体的であるほど良い出力が得られます。</p>
-<table>
-<tr class="header"><th>NG（曖昧）</th><th>OK（具体的）</th></tr>
+<div class="table-wrap"><table>
+<tr><th>NG（曖昧）</th><th>OK（具体的）</th></tr>
 <tr><td>「メールを書いて」</td><td>「A社の竹田さんへ、先日の打ち合わせのお礼と次回日程調整の依頼を書いて。丁寧なビジネス敬語で、200字以内」</td></tr>
-<tr class="even"><td>「これを要約して」</td><td>「この会議メモを、決定事項・未解決事項・次のアクションの3項目に分けて箇条書きにして」</td></tr>
+<tr><td>「これを要約して」</td><td>「この会議メモを、決定事項・未解決事項・次のアクションの3項目に分けて箇条書きにして」</td></tr>
 <tr><td>「翻訳して」</td><td>「以下の日本語を、英語ネイティブのビジネスパーソン向けに自然な英語に翻訳して」</td></tr>
-</table>
+</table></div>
 <hr>
-<h2 id="2-2-claudemd-プロジェクトの憲法">2-2. CLAUDE.md — プロジェクトの「憲法」</h2>
+<h2 id="2-2-claudemd-プロジェクトの憲法"><span class="h2-num">2-2</span>CLAUDE.md — プロジェクトの「憲法」</h2>
 <p><strong>CLAUDE.md</strong>は、プロジェクトのルールをClaudeに伝えるための設定ファイルです。プロジェクトフォルダに置いておくと、Claude Codeがそのフォルダで作業するたびに自動的に読み込みます。</p>
 <p>「毎回Claudeに同じことを説明しなくていい」状態を作れるのが最大のメリットです。また、チームメンバー全員が同じCLAUDE.mdを使うことで、Claudeの振る舞いを組織として統一できます。</p>
 <h3 id="claudemd-に書くべきこと">CLAUDE.md に書くべきこと</h3>
@@ -640,7 +851,7 @@ a:hover { opacity: 0.7; }
   <li><strong>禁止事項</strong>（確認なしにファイルを削除しない、コミットしない、など）</li>
 </ul>
 <h3 id="claudemd-のサンプル最小構成">CLAUDE.md のサンプル（最小構成）</h3>
-<pre><code class="language-markdown"># プロジェクト：社内レポート自動化
+<div class="code-wrap"><span class="code-lang">markdown</span><pre><code># プロジェクト：社内レポート自動化
 
 ## 目的
 
@@ -660,11 +871,11 @@ a:hover { opacity: 0.7; }
 ## 禁止事項
 
 - 確認なしに本番データベースへの書き込みを行わない
-- 確認なしにgitにコミット・プッシュしない</code></pre>
+- 確認なしにgitにコミット・プッシュしない</code></pre></div>
 <h3 id="会社共通のclaudemdテンプレート">会社共通のCLAUDE.mdテンプレート</h3>
 <p>個々のプロジェクトのCLAUDE.mdに加え、<strong>会社全体の共通テンプレート</strong>をツナガル社のGitHub Organizationで管理することを推奨します。共通テンプレートには、全プロジェクトに適用すべき最低限のセキュリティルール（§3参照）やフォーマット規則を記載します。新しいプロジェクトを始める際は、このテンプレートをコピーして出発点にすることで、設定漏れを防げます。</p>
 <hr>
-<h2 id="2-3-利用モードの違い">2-3. 利用モードの違い</h2>
+<h2 id="2-3-利用モードの違い"><span class="h2-num">2-3</span>利用モードの違い</h2>
 <p>Claudeには、用途に応じた3つの利用モードがあります。 適切なモードを選ぶことが、安全で効率的な作業につながります。</p>
 <h3 id="チャットモードchat">チャットモード（Chat）</h3>
 <p><strong>claude.ai</strong>またはデスクトップアプリを使った通常の会話形式です。</p>
@@ -691,7 +902,7 @@ a:hover { opacity: 0.7; }
 </ul>
 <blockquote class="warn">⚠️ このモードは非エンジニアスタッフには推奨しません。<br>使用する場合はエンジニアに相談してください。</blockquote>
 <hr>
-<h2 id="2-4-claudeのツール拡張">2-4. Claudeのツール拡張</h2>
+<h2 id="2-4-claudeのツール拡張"><span class="h2-num">2-4</span>Claudeのツール拡張</h2>
 <p>Claudeの標準機能を超えた作業が必要な場合、以下の3つの方法で能力を拡張できます。</p>
 <h3 id="skillsスキル">Skills（スキル）</h3>
 <p>スキルは、特定の分野や作業に特化した<strong>追加指示セット</strong>です。 Markdownファイルで構成されており、インストールすることでClaudeが その分野のベストプラクティスを知った状態で作業を開始できます。</p>
@@ -706,7 +917,7 @@ a:hover { opacity: 0.7; }
 <p>Claude デスクトップアプリを開き、チャット入力欄の左下にある <strong>＋アイコン → "Customize"</strong> を選択します。スキルの検索・プレビュー・インストールをGUIで操作できます。技術的な知識は不要です。</p>
 <p><strong>② CLIツール <code>npx skills</code> を使う（Claude Code）</strong></p>
 <p>Claude Codeのターミナルで以下のコマンドを実行します：</p>
-<pre><code class="language-bash">npx skills</code></pre>
+<div class="code-wrap"><span class="code-lang">bash</span><pre><code>npx skills</code></pre></div>
 <p>スキルの一覧が表示され、番号を選んでインストールできます。Claude Code自体がこの操作を代行してくれる場合もあります。</p>
 <p><strong>③ 手動インストール</strong></p>
 <p>スキルのMarkdownファイルを <code>~/.claude/skills/</code> に配置することでもインストールできます。GitHub Organizationで承認済みスキルを管理している場合は、このパスを使って配布できます。</p>
@@ -718,29 +929,29 @@ a:hover { opacity: 0.7; }
 <p>Claude.aiのブラウザ版・デスクトップアプリには<strong>Projectsという機能</strong>があります。プロジェクトを作成すると、会話をまたいで文脈（コンテキスト）が保持されます。</p>
 <p>毎回「あなたはこういう仕事をしています」と説明し直す必要がなくなるため、継続的な作業に特に有効です。 CLAUDE.mdに近い役割を、技術的な設定なしに実現できます。</p>
 <hr>
-<h2 id="2-5-外部cliツールの準備">2-5. 外部CLIツールの準備</h2>
+<h2 id="2-5-外部cliツールの準備"><span class="h2-num">2-5</span>外部CLIツールの準備</h2>
 <p>Claude Codeを使って高度な作業を行う場合、追加のツールがPCにインストールされている必要があります。 Claude Code自体が「このツールが必要です、インストールしていいですか？」と確認してくれるため、手動でインストールする必要はほとんどありません。</p>
 <p><strong>主なツールと用途（参考）：</strong></p>
-<table>
-<tr class="header"><th>ツール</th><th>用途</th></tr>
+<div class="table-wrap"><table>
+<tr><th>ツール</th><th>用途</th></tr>
 <tr><td>Node.js / npm</td><td>Claude Codeおよびスキルの動作に必要</td></tr>
-<tr class="even"><td>gws（Google Workspace CLI）</td><td>Google Drive・Docs・Sheetsの操作</td></tr>
+<tr><td>gws（Google Workspace CLI）</td><td>Google Drive・Docs・Sheetsの操作</td></tr>
 <tr><td>Git</td><td>バージョン管理 — ファイルの変更履歴を記録する仕組み（詳細は§1-2参照）</td></tr>
-<tr class="even"><td>gh（GitHub CLI）</td><td>GitHubリポジトリの操作</td></tr>
-</table>
+<tr><td>gh（GitHub CLI）</td><td>GitHubリポジトリの操作</td></tr>
+</table></div>
 <p>Claude Codeの指示に従ってインストールを進めれば問題ありません。不明な点はエンジニアに確認してください。</p>
 </section>
 
-<section>
-<h1 id="3-セキュリティの考え方">3. セキュリティの考え方</h1>
+<section data-sec="3" class="fade-in">
+<h1 id="3-セキュリティの考え方" data-num="3">セキュリティの考え方</h1>
 <blockquote>このセクションは、Claudeを使い始める前に<strong>全員が読む</strong>必要があります。<br>ツールの使い方よりも先に、「何を入力してはいけないか」を理解してください。</blockquote>
 <hr>
-<h2 id="3-1-なぜai利用にはリスクがあるのか">3-1. なぜAI利用にはリスクがあるのか</h2>
+<h2 id="3-1-なぜai利用にはリスクがあるのか"><span class="h2-num">3-1</span>なぜAI利用にはリスクがあるのか</h2>
 <p>Claudeはクラウドサービスです。 なたがClaude.aiに入力したテキストは、Anthropicのサーバーに送信されます。</p>
 <p>これはGmailやGoogleドキュメントを使うときと本質的に同じです。 クラウドサービスを使う以上、<strong>何を送信するかを意識的に選ぶ責任</strong>があります。</p>
 <p>特に注意が必要なのは、Claudeが「気持ちよく何でも受け取ってくれる」点です。 機密情報を入力しても、Claudeは断りません。 判断するのは常に<strong>あなた自身</strong>です。</p>
 <hr>
-<h2 id="3-2-情報のリスクレベル分類">3-2. 情報のリスクレベル分類</h2>
+<h2 id="3-2-情報のリスクレベル分類"><span class="h2-num">3-2</span>情報のリスクレベル分類</h2>
 <p>AIに入力する情報を、以下の3段階で判断してください。</p>
 <h3 id="レベル1低リスク-自由に使える">レベル1：低リスク ✅ 自由に使える</h3>
 <p><strong>定義：</strong> 公開しても問題のない情報、または完全に匿名化された情報。</p>
@@ -776,41 +987,41 @@ a:hover { opacity: 0.7; }
 </ul>
 <p><strong>ルール：</strong> 上長とIT/エンジニアの承認なしに、これらの情報をClaudeに入力しないでください。</p>
 <hr>
-<h2 id="3-3-絶対に入力してはいけない情報">3-3. 絶対に入力してはいけない情報</h2>
+<h2 id="3-3-絶対に入力してはいけない情報"><span class="h2-num">3-3</span>絶対に入力してはいけない情報</h2>
 <p>どんな状況でも、以下の情報はClaudeに入力しないでください。</p>
-<table>
-<tr class="header"><th>情報の種類</th><th>具体例</th></tr>
+<div class="table-wrap"><table>
+<tr><th>情報の種類</th><th>具体例</th></tr>
 <tr><td>認証情報</td><td>パスワード、PINコード、セキュリティコード</td></tr>
-<tr class="even"><td>APIキー・トークン</td><td><code>sk-ant-...</code> のような文字列、アクセストークン</td></tr>
+<tr><td>APIキー・トークン</td><td><code>sk-ant-...</code> のような文字列、アクセストークン</td></tr>
 <tr><td>個人識別情報</td><td>マイナンバー、パスポート番号、免許証番号</td></tr>
-<tr class="even"><td>顧客の個人情報</td><td>氏名・メールアドレス・電話番号・住所</td></tr>
+<tr><td>顧客の個人情報</td><td>氏名・メールアドレス・電話番号・住所</td></tr>
 <tr><td>未公開の財務情報</td><td>M&amp;A情報、未発表の決算データ</td></tr>
-<tr class="even"><td>NDA対象の情報</td><td>守秘義務のある取引先・契約内容</td></tr>
-</table>
+<tr><td>NDA対象の情報</td><td>守秘義務のある取引先・契約内容</td></tr>
+</table></div>
 <blockquote class="warn">⚠️ <strong>重要：</strong> Claudeはこれらの情報を「受け取らない」とは言いません。<br>入力を止めるのはシステムではなく、<strong>あなた自身</strong>です。</blockquote>
 <hr>
-<h2 id="3-4-シークレット管理の基本">3-4. シークレット管理の基本</h2>
+<h2 id="3-4-シークレット管理の基本"><span class="h2-num">3-4</span>シークレット管理の基本</h2>
 <p>開発プロジェクトでClaudeを使う場合、<strong>APIキーやパスワードをファイルに直接書かない</strong>ことが原則です。</p>
 <p><strong>なぜか？</strong> コードをGitHubに保存するとき、ファイルに書かれた秘密情報は誰にでも見られる状態になる可能性があります。 「環境変数」という仕組みを使えば、秘密情報をコードから切り離して管理できます。</p>
 <p><strong>もしClaude（またはClaude Code）が「ファイルにパスワードやAPIキーを書いてください」と指示してきたら、それは間違いです。</strong> 必ずエンジニアに相談してください。</p>
 <hr>
-<h2 id="3-5-エンジニアを必ず関与させるケース">3-5. エンジニアを必ず関与させるケース</h2>
+<h2 id="3-5-エンジニアを必ず関与させるケース"><span class="h2-num">3-5</span>エンジニアを必ず関与させるケース</h2>
 <p>以下のいずれかに該当する場合は、作業を進める前にエンジニアに相談してください。</p>
-<ul>
-  <li>[ ] そのシステムやツールは、社外のユーザー（顧客・取引先・一般公開）がアクセスする</li>
-  <li>[ ] 本番のデータベースや業務システムに接続する</li>
-  <li>[ ] ログイン・権限管理（誰がアクセスできるか）を扱う</li>
-  <li>[ ] 個人情報を処理・保存する</li>
-  <li>[ ] どのリスクレベルに該当するか判断できない</li>
+<ul class="checklist">
+  <li><span class="checkbox"></span>そのシステムやツールは、社外のユーザー（顧客・取引先・一般公開）がアクセスする</li>
+  <li><span class="checkbox"></span>本番のデータベースや業務システムに接続する</li>
+  <li><span class="checkbox"></span>ログイン・権限管理（誰がアクセスできるか）を扱う</li>
+  <li><span class="checkbox"></span>個人情報を処理・保存する</li>
+  <li><span class="checkbox"></span>どのリスクレベルに該当するか判断できない</li>
 </ul>
 <p><strong>これは「作業を止める」ためのルールではありません。</strong> 問題が小さいうちに、適切な人を巻き込むためのルールです。後から修正するコストは、最初から相談するコストの何倍にもなります。</p>
 </section>
 
-<section>
-<h1 id="4-活用事例">4. 活用事例</h1>
+<section data-sec="4" class="fade-in">
+<h1 id="4-活用事例" data-num="4">活用事例</h1>
 <p>このセクションでは、Claudeを実際の業務でどのように活用できるか、具体的な例を紹介します。難易度とリスクレベルの低いものから順に並んでいます。</p>
 <hr>
-<h2 id="4-1-文書作成翻訳要約">4-1. 文書作成・翻訳・要約</h2>
+<h2 id="4-1-文書作成翻訳要約"><span class="h2-num">4-1</span>文書作成・翻訳・要約</h2>
 <p><strong>リスクレベル：</strong> ✅ レベル1 <strong>使うツール：</strong> ブラウザ版 / デスクトップアプリ</p>
 <p>日常業務で最もすぐに効果が出る使い方です。特別な設定は不要で、今日から始められます。</p>
 <p><strong>できること：</strong></p>
@@ -821,13 +1032,13 @@ a:hover { opacity: 0.7; }
   <li>文章の誤字脱字チェックと文体の統一</li>
 </ul>
 <p><strong>プロンプト例：</strong></p>
-<pre><code>以下の英語メールを、丁寧なビジネス日本語に翻訳してください。
+<div class="code-wrap"><pre><code>以下の英語メールを、丁寧なビジネス日本語に翻訳してください。
 返信として送る形式にしてください。
 
-[英語メールの本文をここに貼り付け]</code></pre>
+[英語メールの本文をここに貼り付け]</code></pre></div>
 <blockquote class="warn">⚠️ 個人名・会社名・金額など機密性の高い情報は、貼り付け前に削除または仮名に置き換えてください（§3参照）。</blockquote>
 <hr>
-<h2 id="4-2-スプレッドシートデータ整理">4-2. スプレッドシート・データ整理</h2>
+<h2 id="4-2-スプレッドシートデータ整理"><span class="h2-num">4-2</span>スプレッドシート・データ整理</h2>
 <p><strong>リスクレベル：</strong> ✅ / ⚠️ レベル1〜2（内容による）</p>
 <p><strong>使うツール：</strong> ブラウザ版 / Claude Code + Google Workspaceスキル</p>
 <p>データの整理・変換・集計を自動化できます。</p>
@@ -839,13 +1050,13 @@ a:hover { opacity: 0.7; }
   <li>Google Sheetsと連携してデータを読み書き（MCPコネクタ使用時）</li>
 </ul>
 <p><strong>プロンプト例：</strong></p>
-<pre><code>以下のデータは、毎月の売上記録です（顧客名は仮名に変えています）。
+<div class="code-wrap"><pre><code>以下のデータは、毎月の売上記録です（顧客名は仮名に変えています）。
 月別・担当者別の合計を計算し、上位3名を強調したサマリーを作成してください。
 
-[データをここに貼り付け]</code></pre>
+[データをここに貼り付け]</code></pre></div>
 <blockquote class="warn">⚠️ 実際の顧客名や個人情報を含むデータは、必ず匿名化してから入力してください。</blockquote>
 <hr>
-<h2 id="4-3-プレゼンテーション資料作成">4-3. プレゼンテーション・資料作成</h2>
+<h2 id="4-3-プレゼンテーション資料作成"><span class="h2-num">4-3</span>プレゼンテーション・資料作成</h2>
 <p><strong>リスクレベル：</strong> ✅ レベル1 <strong>使うツール：</strong> Claude Code + PPTXスキル / Google Slidesコネクタ</p>
 <p>プレゼン資料の骨格作りと内容生成を効率化できます。</p>
 <p><strong>できること：</strong></p>
@@ -856,13 +1067,13 @@ a:hover { opacity: 0.7; }
   <li>PowerPointファイル（.pptx）の直接編集</li>
 </ul>
 <p><strong>プロンプト例：</strong></p>
-<pre><code>新入社員向けのオンボーディング研修用スライドを作成してください。
+<div class="code-wrap"><pre><code>新入社員向けのオンボーディング研修用スライドを作成してください。
 ・対象：2026年度入社の新卒スタッフ
 ・内容：会社概要、AI活用の方針、Claudeの使い方の基本
 ・スライド枚数：10〜15枚
-・スタイル：わかりやすく、図解を多用</code></pre>
+・スタイル：わかりやすく、図解を多用</code></pre></div>
 <hr>
-<h2 id="4-4-社内ツールダッシュボードの作成">4-4. 社内ツール・ダッシュボードの作成</h2>
+<h2 id="4-4-社内ツールダッシュボードの作成"><span class="h2-num">4-4</span>社内ツール・ダッシュボードの作成</h2>
 <p><strong>リスクレベル：</strong> ⚠️/🚫 レベル2〜3（公開範囲による） <strong>使うツール：</strong> Claude Code</p>
 <p>HTMLとCSSを使ったシンプルなWebツールやダッシュボードを作成できます。エンジニアでなくても、Claude Codeと協働することで実現できます。</p>
 <p><strong>できること：</strong></p>
@@ -873,7 +1084,7 @@ a:hover { opacity: 0.7; }
 </ul>
 <blockquote class="warn">⚠️ 作成したツールを他の人がアクセスできる形で公開する場合は、<strong>必ず§4-5（デプロイ）と§3-5（エンジニアへのエスカレーション）を確認してください</strong>。</blockquote>
 <hr>
-<h2 id="4-5-アプリツールの公開デプロイ">4-5. アプリ・ツールの公開（デプロイ）</h2>
+<h2 id="4-5-アプリツールの公開デプロイ"><span class="h2-num">4-5</span>アプリ・ツールの公開（デプロイ）</h2>
 <p><strong>リスクレベル：</strong> 🚫 レベル3（外部公開の場合） <strong>使うツール：</strong> Claude Code + GitHub + Vercel</p>
 <p>§4-4で作成したツールを他のメンバーや社外の人が使えるようにするには、<strong>デプロイ</strong>（公開）の作業が必要です。</p>
 <blockquote class="warn">⚠️ このサブセクションは「何が起きているかを理解する」ためのものです。<br>実際のデプロイ作業はエンジニアと協力して行うことを強く推奨します。</blockquote>
@@ -890,38 +1101,62 @@ a:hover { opacity: 0.7; }
 <h3 id="公開前に必ず決めることアクセス範囲">公開前に必ず決めること：アクセス範囲</h3>
 <p>デプロイの前に、以下を必ず確認してください。</p>
 <p><strong>① 誰がアクセスできるか？</strong></p>
-<table>
-<tr class="header"><th>アクセス範囲</th><th>対応方法</th></tr>
+<div class="table-wrap"><table>
+<tr><th>アクセス範囲</th><th>対応方法</th></tr>
 <tr><td>社内メンバーのみ</td><td>Vercelのパスワード保護、または社内ネットワーク制限</td></tr>
-<tr class="even"><td>特定の取引先</td><td>認証機能の実装（エンジニア必須）</td></tr>
+<tr><td>特定の取引先</td><td>認証機能の実装（エンジニア必須）</td></tr>
 <tr><td>一般公開</td><td>セキュリティ設計・個人情報保護法対応（エンジニア必須）</td></tr>
-</table>
+</table></div>
 <blockquote class="warn">⚠️ <strong>「URLがあるから大丈夫」は間違いです。</strong><br>アクセス制御を設定しないURL（<code>https://...vercel.app</code>）は、URLを知っていれば誰でもアクセスできます。<br>これは社内限定ツールには適していません。</blockquote>
 <p><strong>② APIキーや秘密情報は含まれていないか？</strong></p>
 <p>コード内にAPIキーやパスワードを直接書いていないか確認してください。詳細は§3-4を参照してください。</p>
 </section>
 
-</div><!-- .content -->
+</div>
 </main>
-</div><!-- .layout -->
+</div>
 
 <script>
-// Active nav highlight on scroll
-const headings = document.querySelectorAll('h1[id], h2[id]');
-const navLinks = document.querySelectorAll('nav a');
+// ── Scroll entrance ────────────────────────────────────────
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      // Stagger children slightly
+      const sections = document.querySelectorAll('.fade-in');
+      const idx = [...sections].indexOf(e.target);
+      e.target.style.transitionDelay = '0ms';
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.04, rootMargin: '0px 0px -40px 0px' });
 
-function setActive() {
-  let current = '';
-  headings.forEach(h => {
-    if (h.getBoundingClientRect().top <= 120) current = h.id;
-  });
+document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+// ── Nav active state ───────────────────────────────────────
+const headings = [...document.querySelectorAll('h1[id], h2[id]')];
+const navLinks = [...document.querySelectorAll('nav a')];
+
+let ticking = false;
+function updateActive() {
+  const scrollY = window.scrollY + 130;
+  let current = headings[0]?.id ?? '';
+  for (const h of headings) {
+    if (h.offsetTop <= scrollY) current = h.id;
+    else break;
+  }
   navLinks.forEach(a => {
-    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    const href = a.getAttribute('href')?.slice(1);
+    a.classList.toggle('active', href === current);
   });
+  ticking = false;
 }
 
-window.addEventListener('scroll', setActive, { passive: true });
-setActive();
+window.addEventListener('scroll', () => {
+  if (!ticking) { requestAnimationFrame(updateActive); ticking = true; }
+}, { passive: true });
+
+updateActive();
 </script>
 </body>
 </html>
