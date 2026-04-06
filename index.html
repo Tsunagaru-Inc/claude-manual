@@ -626,6 +626,20 @@ a:hover { text-decoration-color: var(--text); }
       <li class="nav-h2"><a href="#4-3-プレゼンテーション資料作成"><span class="nav-subnum">4-3</span><span class="nav-label">プレゼンテーション・資料作成</span></a></li>
       <li class="nav-h2"><a href="#4-4-社内ツールダッシュボードの作成"><span class="nav-subnum">4-4</span><span class="nav-label">社内ツール・ダッシュボードの作成</span></a></li>
       <li class="nav-h2"><a href="#4-5-アプリツールの公開デプロイ"><span class="nav-subnum">4-5</span><span class="nav-label">アプリ・ツールの公開（デプロイ）</span></a></li>
+      <li class="nav-h1"><a href="#5-claude-101-入門コース"><span class="nav-num">5</span><span class="nav-label">Claude 101 — 入門コース</span></a></li>
+      <li class="nav-h2"><a href="#5-1-claudeとは"><span class="nav-subnum">5-1</span><span class="nav-label">Claudeとは</span></a></li>
+      <li class="nav-h2"><a href="#5-2-claudeとの最初の会話"><span class="nav-subnum">5-2</span><span class="nav-label">Claudeとの最初の会話</span></a></li>
+      <li class="nav-h2"><a href="#5-3-より良い結果を得る"><span class="nav-subnum">5-3</span><span class="nav-label">より良い結果を得る</span></a></li>
+      <li class="nav-h2"><a href="#5-4-claudeデスクトップアプリ：chatcoworkcode"><span class="nav-subnum">5-4</span><span class="nav-label">Claudeデスクトップアプリ：Chat・Cowork・Code</span></a></li>
+      <li class="nav-h2"><a href="#5-5-projectsで仕事を整理する"><span class="nav-subnum">5-5</span><span class="nav-label">Projectsで仕事を整理する</span></a></li>
+      <li class="nav-h2"><a href="#5-6-artifactsで成果物を作る"><span class="nav-subnum">5-6</span><span class="nav-label">Artifactsで成果物を作る</span></a></li>
+      <li class="nav-h2"><a href="#5-7-skillsで作業を効率化する"><span class="nav-subnum">5-7</span><span class="nav-label">Skillsで作業を効率化する</span></a></li>
+      <li class="nav-h2"><a href="#5-8-ツールを接続するconnectors"><span class="nav-subnum">5-8</span><span class="nav-label">ツールを接続する（Connectors）</span></a></li>
+      <li class="nav-h2"><a href="#5-9-enterprise-search"><span class="nav-subnum">5-9</span><span class="nav-label">Enterprise Search</span></a></li>
+      <li class="nav-h2"><a href="#5-10-researchモードで深掘り調査"><span class="nav-subnum">5-10</span><span class="nav-label">Researchモードで深掘り調査</span></a></li>
+      <li class="nav-h2"><a href="#5-11-役割別活用事例"><span class="nav-subnum">5-11</span><span class="nav-label">役割別活用事例</span></a></li>
+      <li class="nav-h2"><a href="#5-12-その他のclaude製品"><span class="nav-subnum">5-12</span><span class="nav-label">その他のClaude製品</span></a></li>
+      <li class="nav-h2"><a href="#5-13-学習のまとめと次のステップ"><span class="nav-subnum">5-13</span><span class="nav-label">学習のまとめと次のステップ</span></a></li>
     </ul>
   </nav>
 </aside>
@@ -653,6 +667,7 @@ a:hover { text-decoration-color: var(--text); }
     <li><span class="toc-num">2</span><a href="#2-claudeの使い方">Claudeの使い方</a></li>
     <li><span class="toc-num">3</span><a href="#3-セキュリティの考え方">セキュリティの考え方</a></li>
     <li><span class="toc-num">4</span><a href="#4-活用事例">活用事例</a></li>
+    <li><span class="toc-num">5</span><a href="#5-claude-101-入門コース">Claude 101 — 入門コース</a></li>
   </ol>
 </div>
 
@@ -1237,6 +1252,195 @@ Claude Code自体が「このツールが必要です、インストールして
 </blockquote>
 <p><strong>② APIキーや秘密情報は含まれていないか？</strong></p>
 <p>コード内にAPIキーやパスワードを直接書いていないか確認してください。詳細は§3-4を参照してください。</p>
+</section>
+
+<section data-sec="5" class="fade-in">
+<h1 id="5-claude-101-入門コース" data-num="5">Claude 101 — 入門コース</h1>
+<h2 id="5-1-claudeとは"><span class="h2-num">5-1</span>Claudeとは</h2>
+<p>Claudeは単なるチャットボットではなく、複雑な仕事に取り組むための思考パートナーとして設計されたAIアシスタントです。有用で、害がなく、正直であることを原則としており、Constitutional AIと呼ばれるアプローチで訓練されています。これは人間の価値観と一致し、透明性を持って動作することを意味します。</p>
+<p>Claudeが優れている主な領域は以下の通りです。</p>
+<ul>
+<li><strong>ライティング・コンテンツ制作</strong>：ソーシャルメディア投稿、ビジネスメール、複雑なレポートを作成し、トーンと構造について一緒に反復処理します</li>
+<li><strong>リサーチ・分析</strong>：複雑な情報を理解し、ドキュメントをアップロードすると200,000トークン以上（約500ページ）のテキストを処理できます</li>
+<li><strong>コーディングサポート</strong>：複数のプログラミング言語でコードの作成、デバッグ、説明を行います</li>
+<li><strong>問題解決と推論</strong>：複雑な認知タスク、数学の問題、戦略的分析を処理します</li>
+</ul>
+<p>Claudeはウェブ版、デスクトップアプリ、モバイルアプリを通じてアクセスでき、すべてのデバイスで会話とコンテキストが同期されます。</p>
+<hr>
+<h2 id="5-2-claudeとの最初の会話"><span class="h2-num">5-2</span>Claudeとの最初の会話</h2>
+<p>Claudeと話すとき、最良のアプローチは同僚と話すのと同じように自然に、簡潔に、会話的に行うことです。効果的なプロンプトは3つの要素で構成されています。</p>
+<p><strong>ステージを設定する</strong>：あなたの役割と目的は何ですか？Claudeが知っておくべき仕事についてのコンテキストはありますか？</p>
+<p><strong>タスクを定義する</strong>：Claudeに実行してもらいたいアクションは何ですか？文章を書く、分析する、構築するのか、それとも他の何かですか？</p>
+<p><strong>ルールを指定する</strong>：使用させたいスタイルやトーンは何ですか？探しているものを示すための例がありますか？</p>
+<p>例えば、「インディー映画ストリーミング市場を調査し、主要なトレンド、競合他社の配置、成長機会を特定してください。現在のウェブリサーチを引用付きで使用し、プロフェッショナルレポートとして構成してください」というプロンプトでは、コンテキスト、アクション、形式がすべて明確に指示されています。</p>
+<p>PDFやその他のドキュメント内の画像、グラフを含むファイルをアップロードすると、Claudeはコンテンツを自動的に解析して回答に考慮します。ファイル形式としてはPDF、DOCX、CSV、TXT、およびPNGやJPEGなどの一般的な画像形式がサポートされています。</p>
+<hr>
+<h2 id="5-3-より良い結果を得る"><span class="h2-num">5-3</span>より良い結果を得る</h2>
+<p>Claudeで作業を開始するとき、最初の回答がまさに期待していないことはよくあります。これは正常なことであり、あなたのアプローチを改善する機会です。</p>
+<p><strong>一般的な課題と対処法</strong>：</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>課題</th>
+<th>対処法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>回答が汎用的すぎる</td>
+<td>対象者、役割、制約に関する詳細を追加します</td>
+</tr>
+<tr>
+<td>回答が長すぎる（または短すぎる）</td>
+<td>明示的に指定します：「2段落の要約をください」など</td>
+</tr>
+<tr>
+<td>形式に従っていない</td>
+<td>説明するだけでなく、形式の例を提供します</td>
+</tr>
+<tr>
+<td>自信がありそうだが実は間違っている</td>
+<td>重要な事実を独立して検証するか、Claudeに引用を求めます</td>
+</tr>
+<tr>
+<td>トーンが正しくない</td>
+<td>トーンを平文で説明するか、望むスタイルの例を提供します</td>
+</tr>
+</tbody></table></div>
+<p>効果的なClaudeユーザーは、初稿を出発点として扱い、会話を通じて改善します。フィードバックは具体的に：「短くしてください」より「最初の2つの段落をカットして、結論をより行動指向にしてください」が優れています。</p>
+<p><strong>AI Fluency 4D Framework</strong>は、AIとの効果的なコラボレーションのための4つのコア能力を特定します：委譲（何をAIに任せるか）、説明（明確に指示する）、識別（出力を批判的に評価する）、勤勉（責任を持ってAIを使用する）。</p>
+<hr>
+<h2 id="5-4-claudeデスクトップアプリ：chatcoworkcode"><span class="h2-num">5-4</span>Claudeデスクトップアプリ：Chat・Cowork・Code</h2>
+<p>Claudeデスクトップアプリは、3つのモード—Chat、Cowork、Code—を提供し、異なるタイプの仕事に最適化されています。</p>
+<p><strong>Chat</strong>は、質問をしたり、ブレインストーム、下書き、または問題を解決する必要があるときに優れています。特有の機能には以下があります：クイックエントリ（MacでOptionキーをダブルタップして、取り組んでいることの上にClaudeを表示）、スクリーンショットとウィンドウ共有、ディクテーション、デスクトップコネクタ。</p>
+<p><strong>Cowork</strong>は、複雑または持続的な仕事—リサーチ、分析、ファイル編成、完成した成果物の製造—のために構築されています。Claudeはマルチタスクでき、複数のプロジェクト部分に同時に取り組めます。フォルダアクセス、スケジュールされたタスク、ブラウザ使用、プラグイン、保護された環境により、大規模な仕事を管理できます。</p>
+<p><strong>Code</strong>はソフトウェアを構築するためのもので、ローカルまたはリモート環境で機能します。Ask/Code/Planモード、ビジュアルdiffs、git統合により、全開発ワークフローを制御できます。</p>
+<div class="code-wrap"><pre><code>例：
+- Chatで：「このダッシュボードのメトリクスは何を意味していますか？」
+- Coworkで：「前四半期について何を決めましたか？」と聞くと、会議メモ、スライド、メール全体で答えを見つけます
+- Codeで：「このエラーを修正してコミットを作成してください」
+</code></pre></div>
+<hr>
+<h2 id="5-5-projectsで仕事を整理する"><span class="h2-num">5-5</span>Projectsで仕事を整理する</h2>
+<p>Projectsは、Claudeが参照すべきナレッジを保存し、特定のトピックまたは業務領域に関連するチャットを整理し、チームメンバーとコラボレーションする場合に最適です。</p>
+<p>プロジェクトは以下の場合に特に価値があります：</p>
+<ul>
+<li>繰り返し使用する参考資料（会議メモ、調査結果、レポート、履歴データなど）</li>
+<li>Claudeの応答方法に関する一貫した要件（常に公式な言語を使用、常にソースを引用など）</li>
+<li>複数の人がアクセスする必要があるチームコラボレーション</li>
+</ul>
+<p><strong>プロジェクト設定</strong>：プロジェクト名とわかりやすい説明を付け、プロジェクト指示を追加します。プロジェクト指示には通常、コンテキスト、プロセス指示、トーンとスタイルの好み、特定の要件が含まれます。次にナレッジベースを構築し、PDFやGoogle Driveリンクなど、Claudeが参照すべきドキュメントをアップロードします。</p>
+<p>プロジェクトがコンテキスト制限に近づくと、検索拡張生成（RAG）が自動的に有効になり、容量が最大10倍に拡大します。Claude for Workユーザーの場合、プロジェクトをチームメイトと共有し、3つの権限レベル（閲覧可能、編集可能、オーナー）から選択できます。</p>
+<div class="code-wrap"><pre><code>プロジェクト活用例：
+- Q4製品ローンチ：仕様、競合分析、メッセージング構想をアップロード
+- リサーチサポート：競合レビュー、ユーザーリサーチ、顧客フィードバックを一元化
+- クライアントアカウントハブ：ブランドガイドライン、過去の成果物を保管
+</code></pre></div>
+<hr>
+<h2 id="5-6-artifactsで成果物を作る"><span class="h2-num">5-6</span>Artifactsで成果物を作る</h2>
+<p>Artifactsは、会話の横にある専用ウィンドウでClaudeが作成するスタンドアロンの対話型アウトプットです。レンダリングされ、すぐに使用可能なコンテンツが表示されます。</p>
+<p>Claudeは以下の場合に自動的にArtifactを作成します：</p>
+<ul>
+<li>重要で自己完結しており、通常15行以上</li>
+<li>編集、反復、再利用したい可能性があるもの</li>
+<li>周囲の会話なしにそれ自体で存在する複雑なコンテンツ</li>
+</ul>
+<p><strong>一般的なArtifactの種類</strong>：ドキュメント（テキストが多く、エクスポートしたいもの）、コードスニペット（任意のプログラミング言語）、HTMLページ（完全なWebページ）、SVG画像（ロゴ、アイコン）、Mermaidダイアグラム（フローチャート、図表）、Reactコンポーネント（対話型UI要素）。</p>
+<p>Artifactを共有するには、コピーまたはダウンロードボタンを使用するか、共有ボタンをクリックして組織内で共有（Claude for Work）または公開可能にします。公開すると、他のユーザーはそのArtifactを「リミックス」し、独自のClaudeの会話で開いて修正・構築できます。</p>
+<div class="code-wrap"><pre><code>例：
+- 「カスタマーオンボーディングプロセスを示すフローチャートを作成してください」
+- 「月間支出を入力して、内訳を表示できる対話型ダッシュボードを構築してください」
+</code></pre></div>
+<hr>
+<h2 id="5-7-skillsで作業を効率化する"><span class="h2-num">5-7</span>Skillsで作業を効率化する</h2>
+<p>Skillsは、Claudeが特定のタスクのパフォーマンスを向上させるために動的にロードする指示、スクリプト、リソースのフォルダです。それらを専門知識パッケージと考えてください。</p>
+<p><strong>Anthropic Skills</strong>はAnthropicが作成・維持し、Excel、Word、PowerPoint、PDFファイル用の拡張ドキュメント作成機能を提供します。Claudeは関連する場合に自動的に呼び出します。</p>
+<p><strong>カスタムSkills</strong>はあなたまたはあなたの組織が専門化されたワークフロー用に作成するものです。カスタムスキルを作成するには、Claudeとの会話を通じて、スキルが実行すべきことについてインタビューを受けます。参照資料をアップロードすると、Claudeが適切に構成されたスキルを含むダウンロード可能なZIPファイルを生成し、それを設定にアップロードします。</p>
+<p><strong>Skillsとprojects</strong>の違い：Projectsはナレッジを保存し、Skillsはタスクを実行します。Projectsは<em>何を</em>提供し（情報）、Skillsは<em>どのように</em>提供します（プロセス）。スキルはプロジェクトに保存されているナレッジを参照できます。</p>
+<div class="code-wrap"><pre><code>実行例：
+- 「月間支出を追跡する合計フォーミュラを含むExcelスプレッドシートを作成します」
+- 「このミーティングノートドキュメントをPowerPointプレゼンテーションに変更します」
+</code></pre></div>
+<hr>
+<h2 id="5-8-ツールを接続するconnectors"><span class="h2-num">5-8</span>ツールを接続する（Connectors）</h2>
+<p>Connectorsはclaudeをアシスタントから情報に精通したコラボレータに変換します。Claudeに毎日使用するのと同じツール、データ、コンテキストへのアクセスを与えます。</p>
+<p>Model Context Protocol（MCP）はコネクタをサポートする統一標準で、Claudeを多くの異なるアプリケーションにシームレスに接続します。</p>
+<p><strong>Webコネクタ</strong>は、Google Drive、Notion、Slack、Asana、Linear、StripeなどのクラウドサービスをClaudeにリンクします。セットアップには、コネクタを見つけ、接続をクリック、既存の認証情報でサインイン、権限を許可、接続をテストする手順があります。</p>
+<p><strong>デスクトップ拡張</strong>はClaude Desktopアプリを通じてコンピュータ上で実行され、ローカルファイル、ブラウザ制御、ネイティブアプリケーション統合へのアクセスをClaudeに与えます。</p>
+<p>セキュリティ面では、Claudeはあなたが見るもの（つまり、あなたがアクセスできるデータのみ）を見ます。権限はコネクタが必要とするものに固有であり、いつでも取り消し可能です。</p>
+<div class="code-wrap"><pre><code>活用例：
+- Asana/Linear：「今週期限の優先度の高いタスクは何ですか？」
+- Slack/Gmail：「ベンダー契約について議論したメールスレッドを見つけてください」
+- Notion/Google Drive：「ブランドボイスガイドラインについて説明文書を検索してください」
+</code></pre></div>
+<hr>
+<h2 id="5-9-enterprise-search"><span class="h2-num">5-9</span>Enterprise Search</h2>
+<p>Enterprise Searchはサイドバーに「{組織名}に質問」という専用のオプションを追加し、複数のデータソースをまたいだ質問に設計されています。通常のチャットとは異なり、情報収集に特化し、カスタム指示を使用します。</p>
+<p><strong>適用範囲</strong>：昨日不在中に何があったか、Q4製品ロードマップについての議論をまとめて、顧客が競合他社を選ぶ主な理由は何か、会社の在宅勤務ポリシーはどのようなものか、新規チームメンバーのオンボーディング情報など。</p>
+<p><strong>設定</strong>（2段階プロセス）：管理者がSharePoint、Slack、Gmailなどの接続されたツールを選択し、プロジェクト名を説明して設定を完了します。ユーザーはサイドバーのプロジェクトをクリックし、推奨されるサービスへの接続をガイドする流れに従い、各サービスで認証します。</p>
+<p>セキュリティ：接続されたオリジナルのツールですでにアクセス権限を持っているデータのみが表示されます。会話はプライベートなままであり、接続されたデータは別途インデックス化または保存されません。</p>
+<hr>
+<h2 id="5-10-researchモードで深掘り調査"><span class="h2-num">5-10</span>Researchモードで深掘り調査</h2>
+<p>Researchモードは、Claudeを会話型アシスタントから体系的な調査者へと変える高度な機能です。単一の検索ではなく、複数の角度から質問を探索し、Web と接続済み統合から情報を合成します。</p>
+<p><strong>リサーチが必要な場合</strong>：複数のソースから情報を統合した包括的なレポート、Web と接続済み統合にわたる詳細な分析、通常であれば何時間もの手作業を必要とする調査、競合他社やベンダーオプションの比較分析。</p>
+<p><strong>代わりにWeb検索を使用する場合</strong>：本日の株価など、クイックで具体的な事実が必要、回答が1～2のソースのみで十分。</p>
+<p><strong>代わりに拡張思考を使用する場合</strong>：外部情報が不要な複雑な問題の推論、数学やコードのデバッグ。</p>
+<p><strong>仕組み</strong>：拡張思考は自動的にアクティブになり、Claudeはリクエストを分解し、互いに基づいた複数の検索を実施し、複数のソースから情報を統合し、引用付きの包括的なレポートを提供します。</p>
+<p>効果的なリサーチプロンプトは具体的です。目標を詳細に説明し、構造を指定し、関連する制約を含めます。</p>
+<div class="code-wrap"><pre><code>効果的な例：
+「電気自動車用バッテリー市場を分析してください。主要プレイヤー、技術トレンド、投資決定に影響する可能性のあるサプライチェーンの課題を特定してください」
+</code></pre></div>
+<hr>
+<h2 id="5-11-役割別活用事例"><span class="h2-num">5-11</span>役割別活用事例</h2>
+<p>Claudeは様々な職務に適用されます。以下は役割別の活用例です。</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>役職</th>
+<th>主な活用例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>営業</td>
+<td>バトルカード構築、営業取引準備、営業レポート作成</td>
+</tr>
+<tr>
+<td>マーケティング</td>
+<td>キャンペーンパフォーマンス分析、プラットフォーム間コンテンツ適応</td>
+</tr>
+<tr>
+<td>ファイナンス</td>
+<td>財務モデル構築、投資メモ起案、複雑なスプレッドシート分析</td>
+</tr>
+<tr>
+<td>人事</td>
+<td>新入社員向けオンボーディングガイド作成</td>
+</tr>
+<tr>
+<td>法務</td>
+<td>ディスカバリタイムラインの追跡とパターン分析</td>
+</tr>
+<tr>
+<td>リサーチ</td>
+<td>文献レビュー計画、生データから統計を検証</td>
+</tr>
+</tbody></table></div>
+<p>これらの例は始まりに過ぎません。詳細なユースケースギャラリーには、各役割向けの段階的なガイドと実践的なプロンプトが含まれています。</p>
+<hr>
+<h2 id="5-12-その他のclaude製品"><span class="h2-num">5-12</span>その他のClaude製品</h2>
+<p>Claudeはインテリジェンスであり、Claude.aiはそれを使う1つの方法に過ぎません。</p>
+<p><strong>Claude Code</strong>はターミナル、IDE、ブラウザで機能するエージェント型のコーディングツールです。プレーンイングリッシュで必要なものを説明してコードを書き、テストを実行し、コミットを作成させられます。エラーメッセージを貼り付けると、Claudeが問題を特定・修正し、慣れないコードベースについて質問できます。</p>
+<p><strong>Claude in Slack</strong>はSlack内で直接統合され、チャネルとスレッドでサポートを得たり、Slack コンテキストをClaudeでの会話に持ち込めます。メッセージへのレスポンスを起案したり、長いスレッドを要約したり、会議準備をし、@Claudeをタグ付けしてコーディングタスクを引き渡せます。</p>
+<p><strong>Claude for Excel</strong>はMicrosoft Excelのサイドバーで直接Claudeを提供し、スプレッドシートを分析、理解、変更できます。複雑なマルチタブワークブークを理解し、数式の依存関係を保持しながらモデル全体を更新し、スプレッドシートエラーをデバッグできます。</p>
+<p><strong>Claude for Chrome</strong>はGoogle Chromeにサイドバーとして追加されるブラウザ拡張機能です。記事や研究論文を要約し、メールレスポンスを起案し、反復的なフォームを自動化し、Webサイト機能をテストできます。（リサーチプレビュー中、Max加入者向け）</p>
+<hr>
+<h2 id="5-13-学習のまとめと次のステップ"><span class="h2-num">5-13</span>学習のまとめと次のステップ</h2>
+<p>このコースを通じて、以下の基本的な概念を習得しました。</p>
+<p><strong>Claudeの基礎</strong>：Claudeは思考パートナーとして設計され、有用で、害がなく、正直です。効果的なプロンプトは、ステージ（コンテキスト）、タスク（アクション）、ルール（形式）を設定します。反復が重要で、フィードバックは具体的に提供します。</p>
+<p><strong>仕事の整理</strong>：Projectsは永続的な知識とカスタム指示を持つ専用ワークスペースを作成します。Artifactsは会話と共にClaudeが作成するドキュメント、コード、図、ツールです。Skillsは専門的なワークフロー（ドキュメント作成含む）をClaudeに教える指示パッケージです。</p>
+<p><strong>リーチの拡張</strong>：Connectorsはツール（Google Workspace、Slack、Notionなど）にClaudeをリンクします。Enterprise Searchは組織の知識ソースを検索します。Researchモードは体系的で複数ソースの調査を実施します。</p>
+<p><strong>実践的応用</strong>：Claudeは役割別に適用でき、Claude.ai以外ではClaude Code、Slack、Excel、Chromeを通じて使用できます。</p>
+<p><strong>次のステップ</strong>：今からできる最も重要なことは、始めることです。今週の仕事から1つの反復的なタスクを選んで、Claudeで試してください。メールのドラフト作成、会議メモの要約、またはスプレッドシートの分析かもしれません。繰り返して学び、Claudeがいつどのように役立つかについての直感を発達させてください。</p>
+<p>忘れないでください：Claudeはコラボレーターとして設計されています。代替品ではありません。最良の結果は、あなたの専門知識、コンテキスト、判断を会話に持ち込んだときに得られます。</p>
 </section>
 
 </div>

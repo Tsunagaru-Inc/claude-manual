@@ -76,7 +76,7 @@ function postprocess(html) {
 }
 
 /* ── Parse each section file ──────────────────────────────── */
-const SECTIONS = ['00_overview', '01_setup', '02_usage', '03_security', '04_usecases'];
+const SECTIONS = ['00_overview', '01_setup', '02_usage', '03_security', '04_usecases', '05_claude101'];
 
 const sectionsHTML = SECTIONS.map((name, i) => {
   const raw   = readFileSync(join(ROOT, 'sections', `${name}.md`), 'utf-8');
